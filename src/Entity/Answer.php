@@ -21,6 +21,12 @@ class Answer
      */
     private $content;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Answerer", inversedBy="answers")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $Answerer;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -34,6 +40,18 @@ class Answer
     public function setContent(string $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getAnswerer(): ?Answerer
+    {
+        return $this->Answerer;
+    }
+
+    public function setAnswerer(?Answerer $Answerer): self
+    {
+        $this->Answerer = $Answerer;
 
         return $this;
     }
