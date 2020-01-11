@@ -34,6 +34,11 @@ class Question
      */
     private $answers;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $Created_At;
+
     public function __construct()
     {
         $this->answers = new ArrayCollection();
@@ -95,6 +100,18 @@ class Question
                 $answer->setQuestion(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->Created_At;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $Created_At): self
+    {
+        $this->Created_At = $Created_At;
 
         return $this;
     }
