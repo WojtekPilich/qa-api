@@ -55,32 +55,27 @@ class QuestionFixtures extends Fixture
         foreach (self::$questionBlock1 as $content) {
             $question = new Question();
             $question
-                ->setContent($content)
-                ->setCreatedAt(new \DateTime());
-            $manager->persist($question);
+                ->setContent($content);
 
+            $manager->persist($question);
             $questioner1->addQuestion($question);
         }
 
         foreach (self::$questionBlock2 as $content) {
             $question = new Question();
             $question
-                ->setContent($content)
-                ->setCreatedAt(new \DateTime());
+                ->setContent($content);
 
             $manager->persist($question);
-
             $questioner2->addQuestion($question);
         }
 
         foreach (self::$questionBlock3 as $content) {
             $question = new Question();
             $question
-                ->setContent($content)
-                ->setCreatedAt(new \DateTime());
+                ->setContent($content);
 
             $manager->persist($question);
-
             $questioner3->addQuestion($question);
         }
 
