@@ -37,7 +37,7 @@ class Question
     /**
      * @ORM\Column(type="datetime")
      */
-    private $Created_At;
+    private $created_at;
 
     public function __construct()
     {
@@ -45,12 +45,12 @@ class Question
         $this->setCreatedAt(new \DateTime());
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getContent(): ?string
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -62,12 +62,12 @@ class Question
         return $this;
     }
 
-    public function getQuestioner(): ?Questioner
+    public function getQuestioner(): Questioner
     {
         return $this->Questioner;
     }
 
-    public function setQuestioner(?Questioner $Questioner): self
+    public function setQuestioner(Questioner $Questioner): self
     {
         $this->Questioner = $Questioner;
 
@@ -105,14 +105,14 @@ class Question
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): \DateTimeInterface
     {
-        return $this->Created_At;
+        return $this->created_at;
     }
 
     public function setCreatedAt(\DateTimeInterface $Created_At): self
     {
-        $this->Created_At = $Created_At;
+        $this->created_at = $Created_At;
 
         return $this;
     }

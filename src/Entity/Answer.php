@@ -33,12 +33,12 @@ class Answer
      */
     private $Question;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getContent(): ?string
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -50,24 +50,24 @@ class Answer
         return $this;
     }
 
-    public function getAnswerer(): ?Answerer
+    public function getAnswerer(): Answerer
     {
         return $this->Answerer;
     }
 
-    public function setAnswerer(?Answerer $Answerer): self
+    public function setAnswerer(Answerer $Answerer): self
     {
         $this->Answerer = $Answerer;
 
         return $this;
     }
 
-    public function getQuestion(): ?Question
+    public function getQuestion(): Question
     {
         return $this->Question;
     }
 
-    public function setQuestion(?Question $Question): self
+    public function setQuestion(Question $Question): self
     {
         $this->Question = $Question;
 

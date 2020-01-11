@@ -43,12 +43,12 @@ class Questioner
         $this->questions = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getEmail(): ?string
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -60,7 +60,7 @@ class Questioner
         return $this;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -72,7 +72,7 @@ class Questioner
         return $this;
     }
 
-    public function getNick(): ?string
+    public function getNick(): string
     {
         return $this->nick;
     }

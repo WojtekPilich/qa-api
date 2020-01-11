@@ -33,12 +33,12 @@ class Answerer
         $this->answers = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getNick(): ?string
+    public function getNick(): string
     {
         return $this->nick;
     }
