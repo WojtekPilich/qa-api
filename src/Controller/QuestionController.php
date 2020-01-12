@@ -94,7 +94,7 @@ class QuestionController extends AbstractFOSRestController
             return new JsonResponse("Cannot add answer to question with id: {$id} because it does not exist!", Response::HTTP_NOT_FOUND);
         }
         $answerer = (new Answerer())
-            ->setNick($request->get('nick'));
+            ->setNick($request->get('nick') ?? 'Anonymus');
 
         $em->persist($answerer);
 
