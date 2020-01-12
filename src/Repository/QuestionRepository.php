@@ -7,7 +7,7 @@ use App\Entity\Question;
 use App\Entity\Questioner;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\NonUniqueResultException;
 
 /**
  * @method Question|null find($id, $lockMode = null, $lockVersion = null)
@@ -23,77 +23,109 @@ class QuestionRepository extends ServiceEntityRepository
     }
 
     /**
-     * Returns only id and content of each existing question
+     * Returns question data with author or/and answers
+     * @param array|null $scope
      * @return array
      */
-    public function getAllQuestionsContent(): array
+    public function getAllQuestionsDataWithScope($scope): array
     {
         $data = [];
         $questions = $this->createQueryBuilder('q')
             ->getQuery()
             ->getResult();
+
+        if (empty($questions)) {
+            return [];
+        }
 
         /** @var Question $question */
         foreach ($questions as $question) {
             $data[] = [
                 'id' => $question->getId(),
                 'content' => $question->getContent(),
+                'created_at' => $question->getCreatedAt()->format('Y-m-d H:i:s'),
             ];
+
+            if ($scope) {
+                /** @var Answer[] $answers */
+                $answers = $question->getAnswers();
+
+                $answersData = [];
+                foreach ($answers as $answer) {
+                    $answersData[] = [
+                        'content' => $answer->getContent(),
+                        'answerer' => $answer->getAnswerer()->getNick(),
+                    ];
+                }
+
+                /** @var Questioner $author */
+                $author = $question->getQuestioner();
+
+                if (in_array('author', $scope)) {
+                    $data[] = [
+                        'questioner' => [
+                            'email' => $author->getEmail(),
+                            'name' => $author->getName(),
+                            'nick' => $author->getNick(),
+                        ],
+                    ];
+                }
+
+                if (in_array('answers', $scope)) {
+                    $data[] = [
+                        'answers' => $answersData,
+                    ];
+                }
+            }
         }
 
         return $data;
     }
 
+
     /**
-     * Returns question data with author or/and answers
-     * @param array $scope
+     * Returns one question data with author or/with answers
+     * @param int $id
      * @return array
+     * @throws NonUniqueResultException
      */
-    public function getAllQuestionsDataWithScope(array $scope): array
+    public function getQuestionById(int $id): array
     {
-        $data = [];
-        $questions = $this->createQueryBuilder('q')
+        /** @var Question|null $question */
+        $question = $this->createQueryBuilder('q')
+            ->andWhere('q.id = :id')
+            ->setParameter('id', $id)
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
 
-        /** @var Question $question */
-        foreach ($questions as $question) {
-
-            /** @var Questioner $author */
-            $author = $question->getQuestioner();
-
-            /** @var Answer[] $answers */
-            $answers = $question->getAnswers();
-
-            $answersData = [];
-            foreach ($answers as $answer) {
-                $answersData[] = [
-                    'content' => $answer->getContent(),
-                    'answerer' => $answer->getAnswerer()->getNick(),
-                ];
-            }
-
-            if ($scope['author']) {
-                $data[] = [
-                    'id' => $question->getId(),
-                    'content' => $question->getContent(),
-                    'questioner' => [
-                        'email' => $author->getEmail(),
-                        'name' => $author->getName(),
-                        'nick' => $author->getNick(),
-                    ],
-                ];
-            }
-
-            if ($scope['answers']) {
-                $data[] = [
-                    'id' => $question->getId(),
-                    'content' => $question->getContent(),
-                    'answers' => $answersData,
-                ];
-            }
+        if (! ($question instanceof Question)) {
+            return [];
         }
 
-        return $data;
+        /** @var Questioner $author */
+        $author = $question->getQuestioner();
+
+        /** @var Answer[] $answers */
+        $answers = $question->getAnswers();
+
+        $answersData = [];
+        foreach ($answers as $answer) {
+            $answersData[] = [
+                'content' => $answer->getContent(),
+                'answerer' => $answer->getAnswerer()->getNick(),
+            ];
+        }
+
+        return [
+            'id' => $question->getId(),
+            'content' => $question->getContent(),
+            'created_at' => $question->getCreatedAt()->format('Y-m-d H:i:s'),
+            'questioner' => [
+                'email' => $author->getEmail(),
+                'name' => $author->getName(),
+                'nick' => $author->getNick(),
+            ],
+            'answers' => $answersData,
+        ];
     }
 }
