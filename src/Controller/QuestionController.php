@@ -94,8 +94,17 @@ class QuestionController extends AbstractFOSRestController
         $repository = $this->getDoctrine()->getRepository(Question::class);
         $question = $repository->findOneBy(['id' => $id]);
 
-        if (strlen($request->get('answer')) > 255 || strlen($request->get('nick')) > 255) {
+        $answerParam = $request->get('answer');
+        $nickParam = $request->get('nick');
+
+        if (strlen($answerParam) > 255 || strlen($nickParam) > 255) {
             return new JsonResponse('Field too long! Maximally 255 characters allowed.', Response::HTTP_BAD_REQUEST);
+        }
+
+        foreach (Answer::$forbiddenWords as $forbiddenWord) {
+            if (strpos($answerParam, $forbiddenWord) !== false || strpos($nickParam, $forbiddenWord) !== false) {
+                return new JsonResponse('Field contains forbidden words', Response::HTTP_BAD_REQUEST);
+            }
         }
 
         if (! ($question instanceof Question)) {
