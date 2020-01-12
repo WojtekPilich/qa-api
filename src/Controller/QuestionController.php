@@ -39,13 +39,17 @@ class QuestionController extends AbstractFOSRestController
     /**
      * List all Questions
      * @Rest\Get("/questions")
-     * @QueryParam( map=true, name="scope", requirements="[a-z]+", nullable=true, description="author or answers")
+     * @QueryParam(map=true, name="scope", nullable=true, requirements="author|answers", description="author or answers")
      * @param ParamFetcher $paramFetcher
      * @return Response
      */
     public function getAllQuestionsAction(ParamFetcher $paramFetcher): Response
     {
         $questions = $this->repository->getAllQuestionsDataWithScope($paramFetcher->get('scope'));
+
+        if (! $paramFetcher->get('scope')) {
+            return new JsonResponse('Allowed query string params: author, answers', Response::HTTP_BAD_REQUEST);
+        }
 
         if (empty($questions)) {
             return new JsonResponse("There are no questions to show. Please try out later.", Response::HTTP_NOT_FOUND);
@@ -85,10 +89,14 @@ class QuestionController extends AbstractFOSRestController
      * @param int $id
      * @return Response
      */
-    public function postAddAnswerToQuestionAction(Request $request, EntityManagerInterface $em, int $id): Response
+    public function postAnswerToQuestionAction(Request $request, EntityManagerInterface $em, int $id): Response
     {
         $repository = $this->getDoctrine()->getRepository(Question::class);
         $question = $repository->findOneBy(['id' => $id]);
+
+        if (strlen($request->get('answer')) > 255 || strlen($request->get('nick')) > 255) {
+            return new JsonResponse('Field too long! Maximally 255 characters allowed.', Response::HTTP_BAD_REQUEST);
+        }
 
         if (! ($question instanceof Question)) {
             return new JsonResponse("Cannot add answer to question with id: {$id} because it does not exist!", Response::HTTP_NOT_FOUND);
