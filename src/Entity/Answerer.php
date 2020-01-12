@@ -38,12 +38,12 @@ class Answerer
         return $this->id;
     }
 
-    public function getNick(): string
+    public function getNick(): ?string
     {
         return $this->nick;
     }
 
-    public function setNick(string $nick): self
+    public function setNick(?string $nick): self
     {
         $this->nick = $nick;
 

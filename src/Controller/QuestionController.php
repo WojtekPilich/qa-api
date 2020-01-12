@@ -78,8 +78,8 @@ class QuestionController extends AbstractFOSRestController
     /**
      * Add answer to
      * @Rest\Post("/question/{id}/addAnswer")
-     * @RequestParam(name="answer", nullable=false, requirements="[a-z]+", description="Answer to given question")
-     * @RequestParam(name="nick", nullable=false, requirements="[a-z]+", description="Answerer nick")
+     * @RequestParam(name="answer", nullable=false, description="Answer to given question")
+     * @RequestParam(name="nick", nullable=true, description="Answerer nick")
      * @param Request $request
      * @param EntityManagerInterface $em
      * @param int $id
