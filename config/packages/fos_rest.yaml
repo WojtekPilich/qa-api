@@ -30,3 +30,5 @@ fos_rest:
     param_fetcher_listener:
         enabled: true
         service: null
+    exception:
+        enabled: true
