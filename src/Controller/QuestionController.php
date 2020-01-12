@@ -38,7 +38,7 @@ class QuestionController extends AbstractFOSRestController
      * @param ParamFetcher $paramFetcher
      * @return Response
      */
-    public function getQuestions(ParamFetcher $paramFetcher): Response
+    public function getAllQuestions(ParamFetcher $paramFetcher): Response
     {
         $questions = $this->repository->getAllQuestionsDataWithScope($paramFetcher->get('scope'));
 
@@ -58,7 +58,7 @@ class QuestionController extends AbstractFOSRestController
      * @return Response
      * @throws NonUniqueResultException
      */
-    public function getQuestion(Request $request, ?int $id): Response
+    public function getOneQuestionWithDetails(Request $request, ?int $id): Response
     {
         $question = $this->repository->getQuestionById($id);
 
