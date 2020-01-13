@@ -40,43 +40,34 @@ class QuestionRepository extends ServiceEntityRepository
 
         /** @var Question $question */
         foreach ($questions as $question) {
-            $data[] = [
-                'id' => $question->getId(),
-                'content' => $question->getContent(),
-                'created_at' => $question->getCreatedAt()->format('Y-m-d H:i:s'),
+
+            /** @var Answer[] $answers */
+            $answers = $question->getAnswers();
+            $answersData = [];
+            foreach ($answers as $answer) {
+                $answersData[] = [
+                    'content' => $answer->getContent(),
+                    'answerer' => $answer->getAnswerer()->getNick(),
+                ];
+            }
+
+            /** @var Questioner $author */
+            $author = $question->getQuestioner();
+            $questionerData = [
+                'email' => $author->getEmail(),
+                'name' => $author->getName(),
+                'nick' => $author->getNick(),
             ];
 
-            if ($scope) {
-                /** @var Answer[] $answers */
-                $answers = $question->getAnswers();
-
-                $answersData = [];
-                foreach ($answers as $answer) {
-                    $answersData[] = [
-                        'content' => $answer->getContent(),
-                        'answerer' => $answer->getAnswerer()->getNick(),
-                    ];
-                }
-
-                /** @var Questioner $author */
-                $author = $question->getQuestioner();
-
-                if (in_array('author', $scope)) {
-                    $data[] = [
-                        'questioner' => [
-                            'email' => $author->getEmail(),
-                            'name' => $author->getName(),
-                            'nick' => $author->getNick(),
-                        ],
-                    ];
-                }
-
-                if (in_array('answers', $scope)) {
-                    $data[] = [
-                        'answers' => $answersData,
-                    ];
-                }
-            }
+            $data[] = [
+                'question' => [
+                    'id' => $question->getId(),
+                    'content' => $question->getContent(),
+                    'created_at' => $question->getCreatedAt()->format('Y-m-d H:i:s'),
+                    ($scope && in_array('author', $scope)) ? 'questioner' : null => ($scope && in_array('author', $scope)) ? $questionerData : null,
+                    ($scope && in_array('answers', $scope)) ? 'answers' : null => ($scope && in_array('answers', $scope)) ? $answersData : null,
+                ],
+            ];
         }
 
         return $data;
