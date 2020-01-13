@@ -45,9 +45,9 @@ class QuestionController extends AbstractFOSRestController
      */
     public function getQuestionsAction(ParamFetcher $paramFetcher): Response
     {
-        $questions = $this->repository->getAllQuestionsDataWithScope($paramFetcher->get('scope'));
+        $questions = $this->repository->getAllQuestionsDataWithScope($paramFetcher->get('scope') ?? null);
 
-        if (! $paramFetcher->get('scope')) {
+        if ($paramFetcher->get('scope') === "") {
             return new JsonResponse([
                 'Status' => 'Bad request',
                 'Details' => 'Wrong query parameters.'
@@ -153,7 +153,7 @@ class QuestionController extends AbstractFOSRestController
 
         return new JsonResponse([
             'Status' => 'Created',
-            'Details' => "Successfully added new answer to question with id: $id"],
+            'Details' => "Successfully added new answer. Question details available here: http://127.0.0.1:8000/questions/51"],
             Response::HTTP_CREATED);
     }
 }
