@@ -48,11 +48,17 @@ class QuestionController extends AbstractFOSRestController
         $questions = $this->repository->getAllQuestionsDataWithScope($paramFetcher->get('scope'));
 
         if (! $paramFetcher->get('scope')) {
-            return new JsonResponse('Allowed query string params: author, answers', Response::HTTP_BAD_REQUEST);
+            return new JsonResponse([
+                'Status' => 'Bad request',
+                'Details' => 'Wrong query parameters.'
+                ], Response::HTTP_BAD_REQUEST);
         }
 
         if (empty($questions)) {
-            return new JsonResponse("There are no questions to show. Please try out later.", Response::HTTP_NOT_FOUND);
+            return new JsonResponse([
+                'Status' => 'Not found',
+                'Details' => 'No questions to show.'],
+                Response::HTTP_NOT_FOUND);
         }
 
         $view = $this->view($questions, Response::HTTP_OK);
@@ -61,7 +67,7 @@ class QuestionController extends AbstractFOSRestController
 
     /**
      * List all Questions
-     * @Rest\Get("/question/{id}")
+     * @Rest\Get("/questions/{id}")
      * @param Request $request
      * @param null|int $id
      * @return Response
@@ -71,8 +77,11 @@ class QuestionController extends AbstractFOSRestController
     {
         $question = $this->repository->getQuestionById($id);
 
-        if (empty($question)) {
-            return new JsonResponse("Question with id: {$id} does not exist!", Response::HTTP_NOT_FOUND);
+        if (empty($question) || ! $id) {
+            return new JsonResponse([
+                'Status' => 'Not found',
+                'Details' => 'Question does not exist!'],
+                Response::HTTP_NOT_FOUND);
         }
 
         $view = $this->view($question, Response::HTTP_OK);
@@ -81,7 +90,7 @@ class QuestionController extends AbstractFOSRestController
 
     /**
      * Add answer to
-     * @Rest\Post("/question/{id}/addAnswer")
+     * @Rest\Post("/questions/{id}/answer")
      * @RequestParam(name="answer", nullable=false, description="Answer to given question")
      * @RequestParam(name="nick", nullable=true, description="Answerer nick")
      * @param Request $request
@@ -97,19 +106,36 @@ class QuestionController extends AbstractFOSRestController
         $answerParam = $request->get('answer');
         $nickParam = $request->get('nick');
 
+        if (empty($answerParam)) {
+            return new JsonResponse([
+                'Status' => 'Bad request',
+                'Details' => 'Empty request body, answer is required.'],
+                Response::HTTP_BAD_REQUEST);
+        }
+
         if (strlen($answerParam) > 255 || strlen($nickParam) > 255) {
-            return new JsonResponse('Field too long! Maximally 255 characters allowed.', Response::HTTP_BAD_REQUEST);
+            return new JsonResponse([
+                'Status' => 'Bad request',
+                'Details' => 'Request content is too long.'],
+                Response::HTTP_BAD_REQUEST);
         }
 
         foreach (Answer::$forbiddenWords as $forbiddenWord) {
             if (strpos($answerParam, $forbiddenWord) !== false || strpos($nickParam, $forbiddenWord) !== false) {
-                return new JsonResponse('Field contains forbidden words', Response::HTTP_BAD_REQUEST);
+                return new JsonResponse([
+                    'Status' => 'Bad request',
+                    'Details' => 'Request body contains forbidden words.'],
+                    Response::HTTP_BAD_REQUEST);
             }
         }
 
         if (! ($question instanceof Question)) {
-            return new JsonResponse("Cannot add answer to question with id: {$id} because it does not exist!", Response::HTTP_NOT_FOUND);
+            return new JsonResponse([
+                'Status' => 'Not found',
+                'Details' => 'Question does not exist!'],
+                Response::HTTP_NOT_FOUND);
         }
+
         $answerer = (new Answerer())
             ->setNick($request->get('nick') ?? 'Anonymus');
 
@@ -125,6 +151,9 @@ class QuestionController extends AbstractFOSRestController
         $em->persist($answer);
         $em->flush();
 
-        return new JsonResponse("Successfully added new answer to question with id: $id", Response::HTTP_CREATED);
+        return new JsonResponse([
+            'Status' => 'Created',
+            'Details' => "Successfully added new answer to question with id: $id"],
+            Response::HTTP_CREATED);
     }
 }
