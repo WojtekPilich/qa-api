@@ -43,7 +43,7 @@ class QuestionController extends AbstractFOSRestController
      * @param ParamFetcher $paramFetcher
      * @return Response
      */
-    public function getAllQuestionsAction(ParamFetcher $paramFetcher): Response
+    public function getQuestionsAction(ParamFetcher $paramFetcher): Response
     {
         $questions = $this->repository->getAllQuestionsDataWithScope($paramFetcher->get('scope'));
 
@@ -67,7 +67,7 @@ class QuestionController extends AbstractFOSRestController
      * @return Response
      * @throws NonUniqueResultException
      */
-    public function getOneQuestionWithDetailsAction(Request $request, ?int $id): Response
+    public function getQuestionDetailsAction(Request $request, ?int $id): Response
     {
         $question = $this->repository->getQuestionById($id);
 
@@ -89,7 +89,7 @@ class QuestionController extends AbstractFOSRestController
      * @param int $id
      * @return Response
      */
-    public function postAnswerToQuestionAction(Request $request, EntityManagerInterface $em, int $id): Response
+    public function postAnswerAction(Request $request, EntityManagerInterface $em, int $id): Response
     {
         $repository = $this->getDoctrine()->getRepository(Question::class);
         $question = $repository->findOneBy(['id' => $id]);
