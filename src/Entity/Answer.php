@@ -51,6 +51,16 @@ class Answer
      */
     private $Question;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $created_at;
+
+    public function __construct()
+    {
+        $this->setCreatedAt(new \DateTime());
+    }
+
     public function getId(): int
     {
         return $this->id;
@@ -88,6 +98,18 @@ class Answer
     public function setQuestion(Question $Question): self
     {
         $this->Question = $Question;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): \DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
 
         return $this;
     }
