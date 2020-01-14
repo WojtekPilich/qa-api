@@ -27,7 +27,7 @@ class QuestionRepository extends ServiceEntityRepository
      * @param array|null $scope
      * @return array
      */
-    public function getAllQuestionsDataWithScope($scope): array
+    public function getAllQuestionsWithScope($scope): array
     {
         $data = [];
         $questions = $this->createQueryBuilder('q')
@@ -59,13 +59,16 @@ class QuestionRepository extends ServiceEntityRepository
                 'nick' => $author->getNick(),
             ];
 
+            $isAuthorInScope = $scope && in_array('author', $scope);
+            $areAnswersInScope = $scope && in_array('answers', $scope);
+
             $data[] = [
                 'question' => [
                     'id' => $question->getId(),
                     'content' => $question->getContent(),
                     'created_at' => $question->getCreatedAt()->format('Y-m-d H:i:s'),
-                    ($scope && in_array('author', $scope)) ? 'questioner' : null => ($scope && in_array('author', $scope)) ? $questionerData : null,
-                    ($scope && in_array('answers', $scope)) ? 'answers' : null => ($scope && in_array('answers', $scope)) ? $answersData : null,
+                    $isAuthorInScope ? 'questioner' : null => $isAuthorInScope ? $questionerData : null,
+                    $areAnswersInScope ? 'answers' : null => $areAnswersInScope ? $answersData : null,
                 ],
             ];
         }
