@@ -45,7 +45,7 @@ class QuestionController extends AbstractFOSRestController
      */
     public function getQuestionsAction(ParamFetcher $paramFetcher): Response
     {
-        $questions = $this->repository->getAllQuestionsDataWithScope($paramFetcher->get('scope') ?? null);
+        $questions = $this->repository->getAllQuestionsWithScope($paramFetcher->get('scope') ?? null);
 
         if ($paramFetcher->get('scope') === "") {
             return new JsonResponse([
@@ -61,23 +61,22 @@ class QuestionController extends AbstractFOSRestController
                 Response::HTTP_NOT_FOUND);
         }
 
-        $view = $this->view($questions, Response::HTTP_OK);
-        return $this->handleView($view);
+        return $this->handleView($this->view($questions, Response::HTTP_OK));
     }
 
     /**
      * List all Questions
      * @Rest\Get("/questions/{id}")
      * @param Request $request
-     * @param null|int $id
+     * @param int $id
      * @return Response
      * @throws NonUniqueResultException
      */
-    public function getQuestionDetailsAction(Request $request, ?int $id): Response
+    public function getQuestionAction(Request $request, int $id): Response
     {
         $question = $this->repository->getQuestionById($id);
 
-        if (empty($question) || ! $id) {
+        if (empty($question)) {
             return new JsonResponse([
                 'Status' => 'Not found',
                 'Details' => 'Question does not exist!'],
@@ -94,11 +93,10 @@ class QuestionController extends AbstractFOSRestController
      * @RequestParam(name="answer", nullable=false, description="Answer to given question")
      * @RequestParam(name="nick", nullable=true, description="Answerer nick")
      * @param Request $request
-     * @param EntityManagerInterface $em
      * @param int $id
      * @return Response
      */
-    public function postAnswerAction(Request $request, EntityManagerInterface $em, int $id): Response
+    public function postAnswerAction(Request $request, int $id): Response
     {
         $repository = $this->getDoctrine()->getRepository(Question::class);
         $question = $repository->findOneBy(['id' => $id]);
@@ -136,9 +134,25 @@ class QuestionController extends AbstractFOSRestController
                 Response::HTTP_NOT_FOUND);
         }
 
+        $this->saveAnswerData($request, $question);
+
+        return new JsonResponse([
+            'Status' => 'Created',
+            'Details' => "Successfully added new answer. Question details available here: http://127.0.0.1:8000/questions/{$id}"],
+            Response::HTTP_CREATED);
+    }
+
+    /**
+     * Save answer data fetched from post controller method.
+     * @param Request $request
+     * @param Question $question
+     */
+    protected function saveAnswerData(Request $request, Question $question): void
+    {
+        $em = $this->getDoctrine()->getManager();
+
         $answerer = (new Answerer())
             ->setNick($request->get('nick') ?? 'Anonymus');
-
         $em->persist($answerer);
 
         $answer = (new Answer())
@@ -150,10 +164,5 @@ class QuestionController extends AbstractFOSRestController
 
         $em->persist($answer);
         $em->flush();
-
-        return new JsonResponse([
-            'Status' => 'Created',
-            'Details' => "Successfully added new answer. Question details available here: http://127.0.0.1:8000/questions/51"],
-            Response::HTTP_CREATED);
     }
 }
