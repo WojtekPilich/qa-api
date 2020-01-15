@@ -32,6 +32,12 @@
     "codeception/lib-asserts": {
         "version": "1.10.1"
     },
+    "codeception/lib-innerbrowser": {
+        "version": "1.2.3"
+    },
+    "codeception/module-symfony": {
+        "version": "1.0.0"
+    },
     "codeception/phpunit-wrapper": {
         "version": "8.1.1"
     },
