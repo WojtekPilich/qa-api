@@ -107,7 +107,7 @@ class QuestionController extends AbstractFOSRestController
         if (empty($answerParam)) {
             return new JsonResponse([
                 'Status' => 'Bad request',
-                'Details' => 'Empty request body, answer is required.'],
+                'Details' => 'Answer parameter is required.'],
                 Response::HTTP_BAD_REQUEST);
         }
 

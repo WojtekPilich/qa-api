@@ -46,8 +46,10 @@ class QuestionRepository extends ServiceEntityRepository
             $answersData = [];
             foreach ($answers as $answer) {
                 $answersData[] = [
+                    'id' => $answer->getId(),
                     'content' => $answer->getContent(),
-                    'answerer' => $answer->getAnswerer()->getNick(),
+                    'created_at' => $answer->getCreatedAt()->format('Y-m-d H:i:s'),
+                    'answerer_nick' => $answer->getAnswerer()->getNick(),
                 ];
             }
 
@@ -105,8 +107,10 @@ class QuestionRepository extends ServiceEntityRepository
         $answersData = [];
         foreach ($answers as $answer) {
             $answersData[] = [
+                'id' => $answer->getId(),
                 'content' => $answer->getContent(),
-                'answerer' => $answer->getAnswerer()->getNick(),
+                'created_at' => $answer->getCreatedAt()->format('Y-m-d H:i:s'),
+                'answerer_nick' => $answer->getAnswerer()->getNick(),
             ];
         }
 
