@@ -6,5 +6,12 @@ modules:
             environment: 'test'
         - REST:
             url: http://localhost:8000/
-            depends: PhpBrowser
+            depends: Symfony
+        - Doctrine2:
+            depends: Symfony
+            cleanup: true
+        - Db:
+              dsn: 'mysql:host=localhost;dbname=qa_api'
+              user: 'root'
+              password: '%DB_PASSWORD%'
         - \App\Tests\Helper\Api

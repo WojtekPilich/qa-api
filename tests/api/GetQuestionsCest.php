@@ -6,6 +6,7 @@ class GetQuestionsCest
 {
     public function _before(ApiTester $I)
     {
+
     }
 
     // tests
