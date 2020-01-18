@@ -23,63 +23,6 @@ class QuestionRepository extends ServiceEntityRepository
     }
 
     /**
-     * Returns question data with author or/and answers
-     * @param array|null $scope
-     * @return array
-     */
-    public function getAllQuestionsWithScope($scope): array
-    {
-        $data = [];
-        $questions = $this->createQueryBuilder('q')
-            ->getQuery()
-            ->getResult();
-
-        if (empty($questions)) {
-            return [];
-        }
-
-        /** @var Question $question */
-        foreach ($questions as $question) {
-
-            /** @var Answer[] $answers */
-            $answers = $question->getAnswers();
-            $answersData = [];
-            foreach ($answers as $answer) {
-                $answersData[] = [
-                    'id' => $answer->getId(),
-                    'content' => $answer->getContent(),
-                    'created_at' => $answer->getCreatedAt()->format('Y-m-d H:i:s'),
-                    'answerer_nick' => $answer->getAnswerer()->getNick(),
-                ];
-            }
-
-            /** @var Questioner $author */
-            $author = $question->getQuestioner();
-            $questionerData = [
-                'email' => $author->getEmail(),
-                'name' => $author->getName(),
-                'nick' => $author->getNick(),
-            ];
-
-            $isAuthorInScope = $scope && in_array('author', $scope);
-            $areAnswersInScope = $scope && in_array('answers', $scope);
-
-            $data[] = [
-                'question' => [
-                    'id' => $question->getId(),
-                    'content' => $question->getContent(),
-                    'created_at' => $question->getCreatedAt()->format('Y-m-d H:i:s'),
-                    $isAuthorInScope ? 'questioner' : null => $isAuthorInScope ? $questionerData : null,
-                    $areAnswersInScope ? 'answers' : null => $areAnswersInScope ? $answersData : null,
-                ],
-            ];
-        }
-
-        return $data;
-    }
-
-
-    /**
      * Returns one question data with author or/with answers
      * @param int $id
      * @return array
