@@ -32,7 +32,7 @@ class QuestionController extends AbstractFOSRestController
      * QuestionController constructor.
      * @param MessageBusInterface $messageBus
      */
-    public function __construct(MessageBusInterface $messageBus, QuestionRepository $repository)
+    public function __construct(MessageBusInterface $messageBus)
     {
         $this->messageBus = $messageBus;
     }
