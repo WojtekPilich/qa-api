@@ -40,7 +40,7 @@ class GetQuestionsHandler implements MessageHandlerInterface
      * @param $scope
      * @return JsonResponse
      */
-    private function getQuestionsQuery($scope)
+    private function getQuestionsQuery($scope): JsonResponse
     {
         $questions = $this->repository->findAll();
 
