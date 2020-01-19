@@ -5,8 +5,7 @@ namespace App\Controller;
 use App\Entity\Answer;
 use App\Entity\Answerer;
 use App\Entity\Question;
-use App\Message\GetQuestions;
-use App\Repository\QuestionRepository;
+use App\Message\Query\GetQuestions;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
@@ -39,7 +38,7 @@ class QuestionController extends AbstractFOSRestController
 
     /**
      * List all Questions
-     * @Rest\Get("/questions")
+     * @Rest\Get("/questions", name="questions_get")
      * @QueryParam(map=true, name="scope", nullable=true, requirements="author|answers", description="author or answers")
      * @param ParamFetcher $paramFetcher
      * @return Response
@@ -54,7 +53,7 @@ class QuestionController extends AbstractFOSRestController
 
     /**
      * List all Questions
-     * @Rest\Get("/questions/{id}")
+     * @Rest\Get("/questions/{id}", name="question_get")
      * @param Request $request
      * @param int $id
      * @return Response
@@ -76,7 +75,7 @@ class QuestionController extends AbstractFOSRestController
 
     /**
      * Add answer to
-     * @Rest\Post("/questions/{id}/answer")
+     * @Rest\Post("/questions/{id}/answer", name="question_create")
      * @RequestParam(name="answer", nullable=false, description="Answer to given question")
      * @RequestParam(name="nick", nullable=true, description="Answerer nick")
      * @param Request $request
