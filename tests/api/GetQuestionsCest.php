@@ -1,6 +1,5 @@
 <?php namespace App\Tests;
 use App\DataFixtures\QuestionFixtures;
-use App\Entity\Questioner;
 use Codeception\Util\HttpCode;
 
 class GetQuestionsCest
@@ -11,7 +10,6 @@ class GetQuestionsCest
     }
 
     /**
-     * Test getting all questions without scope
      * @param ApiTester $I
      */
     public function getQuestionsWithoutScope(ApiTester $I)
@@ -22,12 +20,27 @@ class GetQuestionsCest
         $I->seeResponseIsJson();
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseCodeIsSuccessful();
-        $I->seeResponseContainsJson(['question' => []]);
+        $I->seeResponseContainsJson(['questions' => []]);
 
         $I->dontSeeResponseCodeIs(HttpCode::BAD_REQUEST);
         $I->dontSeeResponseContainsJson(['answers' => []]);
         $I->dontSeeResponseContainsJson(['questioner' => []]);
+    }
 
-        $I->seeInRepository(Questioner::class, ['name' => 'Bob']);
+    /**
+     * @param ApiTester $I
+     */
+    public function getQuestionsWithAuthorScope(ApiTester $I)
+    {
+        $I->haveHttpHeader('accept', 'application/json');
+        $I->haveHttpHeader('content-type', 'application/json');
+        $I->sendGET('/questions', ['scope[]' => 'author']);
+        $I->seeResponseIsJson();
+        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseCodeIsSuccessful();
+        $I->seeResponseContainsJson(['questioner' => []]);
+
+        $I->dontSeeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->dontSeeResponseContainsJson(['answers' => []]);
     }
 }
