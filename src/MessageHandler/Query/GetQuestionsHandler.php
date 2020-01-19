@@ -1,11 +1,11 @@
 <?php
 
-namespace App\MessageHandler;
+namespace App\MessageHandler\Query;
 
 use App\Entity\Answer;
 use App\Entity\Question;
 use App\Entity\Questioner;
-use App\Message\GetQuestions;
+use App\Message\Query\GetQuestions;
 use App\Repository\QuestionRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +32,7 @@ class GetQuestionsHandler implements MessageHandlerInterface
      */
     public function __invoke(GetQuestions $getQuestions): JsonResponse
     {
-        return $this->getQuestionsInJson($getQuestions->getScope());
+        return $this->getQuestionsQuery($getQuestions->getScope());
     }
 
     /**
@@ -40,7 +40,7 @@ class GetQuestionsHandler implements MessageHandlerInterface
      * @param $scope
      * @return JsonResponse
      */
-    protected function getQuestionsInJson($scope)
+    private function getQuestionsQuery($scope)
     {
         $questions = $this->repository->findAll();
 
