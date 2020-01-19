@@ -56,11 +56,10 @@ class QuestionController extends AbstractFOSRestController
     /**
      * Get one question
      * @Rest\Get("/questions/{id}", name="question_get")
-     * @param Request $request
      * @param int $id
      * @return Response
      */
-    public function getQuestionAction(Request $request, int $id): Response
+    public function getQuestionAction(int $id): Response
     {
         $envelope = $this->messageBus->dispatch(new GetQuestion($id));
         $handledStamp = $envelope->last(HandledStamp::class);
