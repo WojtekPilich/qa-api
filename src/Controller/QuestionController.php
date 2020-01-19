@@ -70,7 +70,7 @@ class QuestionController extends AbstractFOSRestController
 
     /**
      * Add answer to
-     * @Rest\Post("/questions/{id}/answer", name="question_create")
+     * @Rest\Post("/questions/{id}/answer", name="answer_add")
      * @RequestParam(name="answer", nullable=false, description="Answer to given question")
      * @RequestParam(name="nick", nullable=true, description="Answerer nick")
      * @param Request $request
