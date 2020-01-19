@@ -72,7 +72,7 @@ class AddAnswerHandler implements MessageHandlerInterface
         }
 
         foreach (Answer::$forbiddenWords as $forbiddenWord) {
-            if (strpos(strtolower($answerParam), $forbiddenWord) !== false || strpos($nickParam, $forbiddenWord) !== false) {
+            if (strpos(strtolower($answerParam), $forbiddenWord) !== false || strpos(strtolower($nickParam), $forbiddenWord) !== false) {
                 return new JsonResponse([
                     'Status' => 'Bad request',
                     'Details' => 'Request body contains forbidden words.'],
