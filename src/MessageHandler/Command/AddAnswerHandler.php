@@ -28,7 +28,7 @@ class AddAnswerHandler implements MessageHandlerInterface
     }
 
     /**
-     * Triggers getAllQuestionsQuery to get question data
+     * Triggers addAnswerCommand to save new answer
      * @param AddAnswer $addAnswer
      * @return JsonResponse
      */
@@ -38,6 +38,7 @@ class AddAnswerHandler implements MessageHandlerInterface
     }
 
     /**
+     * Handles new answer
      * @param Request $request
      * @param $id
      * @return JsonResponse
@@ -63,18 +64,20 @@ class AddAnswerHandler implements MessageHandlerInterface
                 Response::HTTP_BAD_REQUEST);
         }
 
-        if (! ValidationHelper::checkParamLength($answerParam) || ! ValidationHelper::checkParamLength($nickParam) ) {
+        if (strlen($answerParam) > 255 || strlen($nickParam) > 255) {
             return new JsonResponse([
                 'Status' => 'Bad request',
                 'Details' => 'Request content is too long.'],
                 Response::HTTP_BAD_REQUEST);
         }
 
-        if (! ValidationHelper::checkForbiddenWords($answerParam) || ! ValidationHelper::checkForbiddenWords($nickParam)) {
-            return new JsonResponse([
-                'Status' => 'Bad request',
-                'Details' => 'Request body contains forbidden words.'],
-                Response::HTTP_BAD_REQUEST);
+        foreach (Answer::$forbiddenWords as $forbiddenWord) {
+            if (strpos(strtolower($answerParam), $forbiddenWord) !== false || strpos($nickParam, $forbiddenWord) !== false) {
+                return new JsonResponse([
+                    'Status' => 'Bad request',
+                    'Details' => 'Request body contains forbidden words.'],
+                    Response::HTTP_BAD_REQUEST);
+            }
         }
 
         $this->saveAnswerData($request, $question);
@@ -86,7 +89,7 @@ class AddAnswerHandler implements MessageHandlerInterface
     }
 
     /**
-     * Save answer data fetched from post controller method.
+     * Save answer into database
      * @param Request $request
      * @param Question $question
      */
