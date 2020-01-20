@@ -52,30 +52,30 @@ class AddAnswerHandler implements MessageHandlerInterface
 
         if (! ($question instanceof Question)) {
             return new JsonResponse([
-                'Status' => 'Not found',
-                'Details' => 'Question does not exist!'],
+                'status' => 'not found',
+                'details' => 'question does not exist!'],
                 Response::HTTP_NOT_FOUND);
         }
 
         if (empty($answerParam)) {
             return new JsonResponse([
-                'Status' => 'Bad request',
-                'Details' => 'Answer parameter is required.'],
+                'status' => 'bad request',
+                'details' => 'answer parameter is required.'],
                 Response::HTTP_BAD_REQUEST);
         }
 
         if (strlen($answerParam) > 255 || strlen($nickParam) > 255) {
             return new JsonResponse([
-                'Status' => 'Bad request',
-                'Details' => 'Request content is too long.'],
+                'status' => 'bad request',
+                'details' => 'request content is too long.'],
                 Response::HTTP_BAD_REQUEST);
         }
 
         foreach (Answer::$forbiddenWords as $forbiddenWord) {
             if (strpos(strtolower($answerParam), $forbiddenWord) !== false || strpos(strtolower($nickParam), $forbiddenWord) !== false) {
                 return new JsonResponse([
-                    'Status' => 'Bad request',
-                    'Details' => 'Request body contains forbidden words.'],
+                    'status' => 'bad request',
+                    'details' => 'request body contains forbidden words.'],
                     Response::HTTP_BAD_REQUEST);
             }
         }
@@ -83,8 +83,8 @@ class AddAnswerHandler implements MessageHandlerInterface
         $this->saveAnswerData($request, $question);
 
         return new JsonResponse([
-            'Status' => 'Created',
-            'Details' => "Successfully added new answer. Question details available here: http://127.0.0.1:8000/questions/{$id}"],
+            'status' => 'created',
+            'details' => "successfully added new answer, question details available here: http://127.0.0.1:8000/questions/{$id}"],
             Response::HTTP_CREATED);
     }
 
