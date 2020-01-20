@@ -20,12 +20,12 @@ class GetQuestionCest
      */
     public function getQuestionWithCorrectId(ApiTester $I)
     {
-        $questionerId = $I->grabFromDatabase('question', 'id', ['content' => 'Who killed Jabba?']);
+        $questionId = $I->grabFromDatabase('question', 'id', ['content' => 'Who killed Jabba?']);
         $I->seeInDatabase('question', ['content' => 'Who killed Jabba?']);
 
         $I->haveHttpHeader('accept', 'application/json');
         $I->haveHttpHeader('content-type', 'application/json');
-        $I->sendGET('/questions/'.$questionerId);
+        $I->sendGET('/questions/'.$questionId);
         $I->seeResponseIsJson();
         $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseCodeIsSuccessful();
