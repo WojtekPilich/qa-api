@@ -9,9 +9,10 @@ modules:
             depends: Symfony
         - Doctrine2:
             depends: Symfony
-            cleanup: true
         - Db:
               dsn: 'mysql:host=localhost;dbname=qa_api'
               user: 'root'
               password: '%DB_PASSWORD%'
+              cleanup: true
+              populate: true
         - \App\Tests\Helper\Api
