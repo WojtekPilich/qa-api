@@ -1,4 +1,7 @@
-<?php namespace App\Tests;
+<?php
+
+namespace App\Tests;
+
 use App\DataFixtures\QuestionerFixtures;
 use App\DataFixtures\QuestionFixtures;
 use Codeception\Util\HttpCode;
