@@ -1,4 +1,4 @@
-#QA_API
+# QA_API
 
 ## Introduction
 The main aim of this small application is adding answers to questions using rest api. It has only backend layer without any gui or frontend so that the best way to test it is to use any http client i.e. Postman. 
@@ -72,12 +72,12 @@ Typical flow can be the following:
 
 Routes and application flow is tested by Codeception framework. 
 
-####Api tests:
+#### Api tests:
 - **GetQuestionsCest** - tests different route response codes for `/questions`,
 - **GetQuestionCest** - tests different route response codes for `/questions/{id}`,
 - **AddAnswerCest** - tests different route response codes for `/questions/{id}/answer`.
 
-####Unit tests:
+#### Unit tests:
 - **GetQuestionsTest** - tests methods and attributes of `GetQuestions` message class,
 - **GetQuestionTest** - tests methods and attributes of `GetQuestion` message class,
 - **AddAnswerTest** - tests methods and attributes of `AddAnswer` message class.
