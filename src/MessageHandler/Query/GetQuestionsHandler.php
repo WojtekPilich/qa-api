@@ -47,15 +47,15 @@ class GetQuestionsHandler implements MessageHandlerInterface
         if ($scope === '') {
             return new JsonResponse([
                 'status' => 'bad request',
-                'details' => 'wrong query parameters.'
-            ],Response::HTTP_BAD_REQUEST);
+                'details' => 'wrong query parameters.'],
+                Response::HTTP_BAD_REQUEST);
         }
 
         if (empty($questions)) {
             return new JsonResponse([
                 'status' => 'not found',
-                'details' => 'no questions to show.'
-            ],Response::HTTP_NOT_FOUND);
+                'details' => 'no questions to show.'],
+                Response::HTTP_NOT_FOUND);
         }
 
         $data = [

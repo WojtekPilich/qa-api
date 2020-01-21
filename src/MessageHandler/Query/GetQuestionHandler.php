@@ -36,6 +36,7 @@ class GetQuestionHandler implements MessageHandlerInterface
     }
 
     /**
+     * Returns question data from database
      * @param $questionId
      * @return JsonResponse
      */

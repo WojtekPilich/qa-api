@@ -35,7 +35,7 @@ class QuestionController extends AbstractFOSRestController
     }
 
     /**
-     * List all Questions
+     * Lists all Questions
      * @Rest\Get("/questions", name="questions_get")
      * @QueryParam(map=true, name="scope", nullable=true, requirements="author|answers", description="author or answers")
      * @param ParamFetcher $paramFetcher
@@ -50,7 +50,7 @@ class QuestionController extends AbstractFOSRestController
     }
 
     /**
-     * Get one question
+     * Gets one question
      * @Rest\Get("/questions/{id}", name="question_get")
      * @param int $id
      * @return Response
@@ -64,7 +64,7 @@ class QuestionController extends AbstractFOSRestController
     }
 
     /**
-     * Add answer to question for given id
+     * Adds answer to question for given id
      * @Rest\Post("/questions/{id}/answer", name="answer_add")
      * @RequestParam(name="answer", nullable=false, description="Answer to given question")
      * @RequestParam(name="nick", nullable=true, description="Answerer nick")

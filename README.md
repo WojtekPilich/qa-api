@@ -44,7 +44,7 @@ Table `answer`
 
 Table `answerer`
 - **id** INT(11) - identifier, primary key,
-- **nick** VARCHAR(255) - nick of answers's author. 
+- **nick** VARCHAR(255) - nick of answer's author. 
 
 ## Routes
 

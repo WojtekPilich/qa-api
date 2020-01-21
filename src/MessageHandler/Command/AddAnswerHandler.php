@@ -21,6 +21,11 @@ class AddAnswerHandler implements MessageHandlerInterface
     /** @var EntityManagerInterface $entityManager */
     private $entityManager;
 
+    /**
+     * AddAnswerHandler constructor.
+     * @param QuestionRepository $repository
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(QuestionRepository $repository, EntityManagerInterface $entityManager)
     {
         $this->repository = $repository;
@@ -38,7 +43,7 @@ class AddAnswerHandler implements MessageHandlerInterface
     }
 
     /**
-     * Handles new answer
+     * Handles answer creation
      * @param Request $request
      * @param $id
      * @return JsonResponse
@@ -64,6 +69,7 @@ class AddAnswerHandler implements MessageHandlerInterface
                 Response::HTTP_BAD_REQUEST);
         }
 
+        // validate params length
         if (strlen($answerParam) > 255 || strlen($nickParam) > 255) {
             return new JsonResponse([
                 'status' => 'bad request',
@@ -71,6 +77,7 @@ class AddAnswerHandler implements MessageHandlerInterface
                 Response::HTTP_BAD_REQUEST);
         }
 
+        // validate forbidden words
         foreach (Answer::$forbiddenWords as $forbiddenWord) {
             if (strpos(strtolower($answerParam), $forbiddenWord) !== false || strpos(strtolower($nickParam), $forbiddenWord) !== false) {
                 return new JsonResponse([
@@ -89,11 +96,11 @@ class AddAnswerHandler implements MessageHandlerInterface
     }
 
     /**
-     * Save answer into database
+     * Saves answer into database
      * @param Request $request
      * @param Question $question
      */
-    protected function saveAnswerData(Request $request, Question $question): void
+    private function saveAnswerData(Request $request, Question $question): void
     {
         $answerer = (new Answerer())
             ->setNick($request->get('nick') ?? 'Anonymus');
