@@ -24,12 +24,27 @@ The main aim of this small application is adding answers to questions using rest
 ## Database
 
 Table `question`
+- **id** INT(11) - identifier, primary key,
+- **questioner_id** INT(11) - reference to `questioner` table that stores author of question,
+- **content** VARCHAR(255) - content of question,
+- **created_at** DATETIME - date and time when question was created.
 
 Table `questioner`
+- **id** INT(11) - identifier, primary key,
+- **email** VARCHAR(255) - email of question's author,
+- **name** VARCHAR(255) - name of question's author,
+- **nick** VARCHAR(255) - nick of question's author.
 
 Table `answer`
+- **id** INT(11) - identifier, primary key,
+- **answerer_id** INT(11) - reference to `answerer` table that stores author of answer,
+- **question_id** INT(11) - reference to `question` table that stores question which answer was added to,
+- **content** VARCHAR(255) - content of answer,
+- **created_at** DATETIME - date and time when answer was created.
 
 Table `answerer`
+- **id** INT(11) - identifier, primary key,
+- **nick** VARCHAR(255) - nick of answers's author. 
 
 ## Routes
 
@@ -70,7 +85,7 @@ Typical flow can be the following:
 
 ## Tests
 
-Routes and application flow is tested by Codeception framework. 
+Routes and application flow was tested by Codeception framework. 
 
 #### Api tests:
 - **GetQuestionsCest** - tests different route response codes for `/questions`,
