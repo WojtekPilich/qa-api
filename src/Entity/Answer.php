@@ -43,18 +43,18 @@ class Answer
      * @ORM\ManyToOne(targetEntity="App\Entity\Answerer", inversedBy="answers")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Answerer;
+    private $answerer;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Question", inversedBy="answers")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Question;
+    private $question;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $created_at;
+    private $createdAt;
 
     public function __construct()
     {
@@ -80,36 +80,36 @@ class Answer
 
     public function getAnswerer(): Answerer
     {
-        return $this->Answerer;
+        return $this->answerer;
     }
 
-    public function setAnswerer(Answerer $Answerer): self
+    public function setAnswerer(Answerer $answerer): self
     {
-        $this->Answerer = $Answerer;
+        $this->answerer = $answerer;
 
         return $this;
     }
 
     public function getQuestion(): Question
     {
-        return $this->Question;
+        return $this->question;
     }
 
-    public function setQuestion(Question $Question): self
+    public function setQuestion(Question $question): self
     {
-        $this->Question = $Question;
+        $this->question = $question;
 
         return $this;
     }
 
     public function getCreatedAt(): \DateTimeInterface
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
