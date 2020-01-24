@@ -24,7 +24,7 @@ class Answerer
     private $nick;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="Answerer")
+     * @ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="answerer")
      */
     private $answers;
 
