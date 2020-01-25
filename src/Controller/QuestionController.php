@@ -37,7 +37,7 @@ class QuestionController extends AbstractFOSRestController
     /**
      * Lists all Questions
      * @Rest\Get("/questions", name="questions_get")
-     * @QueryParam(map=true, name="scope", nullable=true, requirements="author|answers", description="author or answers")
+     * @QueryParam(map=true, name="scope", strict=true, nullable=true, requirements="author|answers", description="author or answers")
      * @param ParamFetcher $paramFetcher
      * @return Response
      */
