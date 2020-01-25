@@ -72,7 +72,7 @@ Table `answerer`
     
 ## Messages flow
 
-Each route is handled by dedicated method in `QuestionController`. When http request is sent, controller triggers `messageBus` which dispatches new instance of message class. Each message class stores the most important data that distinguishes requested resource. 
+Each route is handled by dedicated method in `QuestionsController`. When http request is sent, controller triggers `messageBus` which dispatches new instance of message class. Each message class stores the most important data that distinguishes requested resource. 
 
 For example, `GetQuestions` message stores `scope` parameter which is returned in handler class. Each message is processed by dedicated Message Handler. For example `GetQuestionsHandler` fetches `scope` parameter from `GetQuestions` message and does the rest of the job: grabs questions data from database, prepares json responses etc. Finally, controller returns response prepared by handler. 
 

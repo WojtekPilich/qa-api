@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Question controller.
  * @Route("/",name="api_")
  */
-class QuestionController extends AbstractFOSRestController
+class QuestionsController extends AbstractFOSRestController
 {
     /** @var MessageBusInterface $messageBus */
     private $messageBus;
@@ -58,23 +58,6 @@ class QuestionController extends AbstractFOSRestController
     public function getQuestionAction(int $id): Response
     {
         $envelope = $this->messageBus->dispatch(new GetQuestion($id));
-        $handledStamp = $envelope->last(HandledStamp::class);
-
-        return $handledStamp->getResult();
-    }
-
-    /**
-     * Adds answer to question for given id
-     * @Rest\Post("/questions/{id}/answer", name="answer_add")
-     * @RequestParam(name="answer", nullable=false, description="Answer to given question")
-     * @RequestParam(name="nick", nullable=true, description="Answerer nick")
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
-    public function postAnswerAction(Request $request, int $id): Response
-    {
-        $envelope = $this->messageBus->dispatch(new AddAnswer($request, $id));
         $handledStamp = $envelope->last(HandledStamp::class);
 
         return $handledStamp->getResult();
