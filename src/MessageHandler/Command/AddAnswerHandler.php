@@ -6,6 +6,8 @@ use App\Entity\Answer;
 use App\Entity\Answerer;
 use App\Entity\Question;
 use App\Message\Command\AddAnswer;
+use App\MessageHandler\Helpers\AnswerValidator;
+use App\Repository\ForbiddenWordRepository;
 use App\Repository\QuestionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,21 +17,30 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class AddAnswerHandler implements MessageHandlerInterface
 {
-    /** @var QuestionRepository $repository */
-    private $repository;
+    /** @var QuestionRepository $questionRepo */
+    private $questionRepo;
+
+    /** @var ForbiddenWordRepository $forbiddenRepo */
+    private $forbiddenRepo;
 
     /** @var EntityManagerInterface $entityManager */
     private $entityManager;
 
+    /** @var AnswerValidator $validator */
+    private $validator;
+
     /**
      * AddAnswerHandler constructor.
-     * @param QuestionRepository $repository
+     * @param QuestionRepository $questionRepo
+     * @param ForbiddenWordRepository $forbiddenRepo
      * @param EntityManagerInterface $entityManager
      */
-    public function __construct(QuestionRepository $repository, EntityManagerInterface $entityManager)
+    public function __construct(QuestionRepository $questionRepo, ForbiddenWordRepository $forbiddenRepo, EntityManagerInterface $entityManager)
     {
-        $this->repository = $repository;
+        $this->questionRepo = $questionRepo;
+        $this->forbiddenRepo = $forbiddenRepo;
         $this->entityManager = $entityManager;
+        $this->validator = new AnswerValidator($this->forbiddenRepo->findAll());
     }
 
     /**
@@ -50,7 +61,7 @@ class AddAnswerHandler implements MessageHandlerInterface
      */
     private function addAnswerCommand(Request $request, $id): JsonResponse
     {
-        $question = $this->repository->findOneBy(['id' => $id]);
+        $question = $this->questionRepo->findOneBy(['id' => $id]);
 
         $answerParam = $request->get('answer');
         $nickParam = $request->get('nick');
@@ -70,7 +81,7 @@ class AddAnswerHandler implements MessageHandlerInterface
         }
 
         // validate params length
-        if (strlen($answerParam) > 255 || strlen($nickParam) > 255) {
+        if (! $this->validator->checkLength($answerParam) || ! $this->validator->checkLength($nickParam)) {
             return new JsonResponse([
                 'status' => 'bad request',
                 'details' => 'request content is too long.'],
@@ -78,13 +89,11 @@ class AddAnswerHandler implements MessageHandlerInterface
         }
 
         // validate forbidden words
-        foreach (Answer::$forbiddenWords as $forbiddenWord) {
-            if (strpos(strtolower($answerParam), $forbiddenWord) !== false || strpos(strtolower($nickParam), $forbiddenWord) !== false) {
-                return new JsonResponse([
-                    'status' => 'bad request',
-                    'details' => 'request body contains forbidden words.'],
-                    Response::HTTP_BAD_REQUEST);
-            }
+        if (! $this->validator->searchForbiddenWords($answerParam) || ! $this->validator->searchForbiddenWords($nickParam)) {
+            return new JsonResponse([
+                'status' => 'bad request',
+                'details' => 'request body contains forbidden words.'],
+                Response::HTTP_BAD_REQUEST);
         }
 
         $this->saveAnswerData($request, $question);
