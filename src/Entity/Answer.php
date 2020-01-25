@@ -10,24 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Answer
 {
     /**
-     * Forbidden words in answer
-     * @var array
-     */
-    public static $forbiddenWords = [
-        'fuck',
-        'motherfucker',
-        'pussy',
-        'shit',
-        'bitch',
-        'whore',
-        'slut',
-        'cocksucker',
-        'anal',
-        'asshole',
-        'ass',
-    ];
-
-    /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
