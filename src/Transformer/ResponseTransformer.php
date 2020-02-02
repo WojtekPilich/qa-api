@@ -36,20 +36,22 @@ class ResponseTransformer implements ResponseTransformerInterface
     public function transform(?ValidScope $scope): QuestionsDTO
     {
         $scopeArray = $scope ? $scope->getScope() : null;
-        $result = [];
+        $result = [
+            'status' => 'OK',
+        ];
         $questionerData = [];
         $answersData = [];
 
-        /** @var QuestionDTO $dto */
-        foreach ($this->data as $dto) {
+        /** @var QuestionDTO $qDto */
+        foreach ($this->data as $qDto) {
 
-            $questionerData = $dto->getQuestioner();
-            $answersData = $dto->getAnswers();
+            $questionerData = $qDto->getQuestioner();
+            $answersData = $qDto->getAnswers();
 
             $result['questions'][] = [
-                'id' => $dto->getId(),
-                'content' => $dto->getContent(),
-                'created_at' => $dto->getCreatedAt()->format('Y-m-d H:i:s'),
+                'id' => $qDto->getId(),
+                'content' => $qDto->getContent(),
+                'created_at' => $qDto->getCreatedAt()->format('Y-m-d H:i:s'),
             ];
         }
 

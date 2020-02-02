@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Manager\QuestionsManager;
+use App\Mapper\ResponseMapper;
 use App\Message\Query\GetQuestion;
 use App\Storage\QuestionsRequestStorage;
 use App\Validator\QuestionsValidator;
@@ -46,10 +47,10 @@ class QuestionsController extends AbstractFOSRestController
      * @QueryParam(map=true, name="scope", strict=true, nullable=true, description="author or answers")
      * @param ParamFetcher $paramFetcher
      * @param QuestionsValidator $validator
+     * @param ResponseMapper $mapper
      * @return Response
-     * @throws \Exception
      */
-    public function getQuestionsAction(ParamFetcher $paramFetcher, QuestionsValidator $validator): Response
+    public function getQuestionsAction(ParamFetcher $paramFetcher, QuestionsValidator $validator, ResponseMapper $mapper): Response
     {
         $scope = $paramFetcher->get('scope');
         $validScope = null;
@@ -62,9 +63,12 @@ class QuestionsController extends AbstractFOSRestController
             }
         }
 
-        $results = $this->manager->prepareResult(new QuestionsRequestStorage($validScope ?? null));
-        dd($results);
-        return new JsonResponse($results, 200);
+        try {
+            $results = $this->manager->prepareResult(new QuestionsRequestStorage($validScope ?? null));
+            return $mapper->mapResponseToJson($results);
+        } catch(\Exception $exception) {
+            return $mapper->mapExceptionToJson($exception);
+        }
     }
 
     /**

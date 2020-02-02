@@ -28,6 +28,7 @@ class GetQuestionsHandler implements MessageHandlerInterface
      * Triggers getAllQuestionsQuery to get question data
      * @param GetQuestions $getQuestions
      * @return QuestionsDTO
+     * @throws \Exception
      */
     public function __invoke(GetQuestions $getQuestions): QuestionsDTO
     {

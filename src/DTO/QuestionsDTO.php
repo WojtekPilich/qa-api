@@ -23,6 +23,6 @@ final class QuestionsDTO
      */
     public function getQuestions(): array
     {
-        return $this->getQuestions();
+        return $this->questions;
     }
 }

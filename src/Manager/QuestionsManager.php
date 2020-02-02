@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Manager;
 
 use App\DTO\QuestionDTO;
@@ -51,6 +50,7 @@ class QuestionsManager implements ManagerInterface
 
     /**
      * @return array
+     * @throws \Exception
      */
     public function getQuestions(): array
     {
@@ -58,6 +58,10 @@ class QuestionsManager implements ManagerInterface
 
         $data = [];
         $answersData = [];
+
+        if (empty($questions)) {
+            throw new \Exception('No questions found!');
+        }
 
         /** @var Question $question */
         foreach ($questions as $question) {

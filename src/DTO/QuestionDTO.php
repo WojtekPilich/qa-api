@@ -10,11 +10,11 @@ final class QuestionDTO
 
     private $createdAt;
 
-    private $questioner = [];
+    private $questioner;
 
-    private $answers = [];
+    private $answers;
 
-    public function __construct(int $id, string $content, \DateTime $createdAt, ?array $questioner, ?array $answers)
+    public function __construct(int $id, string $content, \DateTimeInterface $createdAt, array $questioner, array $answers)
     {
         $this->id = $id;
         $this->content = $content;
@@ -40,9 +40,9 @@ final class QuestionDTO
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeInterface
      */
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): \DateTimeInterface
     {
         return $this->createdAt;
     }
