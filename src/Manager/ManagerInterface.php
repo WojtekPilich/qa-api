@@ -6,5 +6,5 @@ use App\Storage\QuestionsRequestStorage;
 
 interface ManagerInterface
 {
-    public function prepareResponse(QuestionsRequestStorage $storage);
+    public function prepareResult(QuestionsRequestStorage $storage);
 }
