@@ -27,6 +27,6 @@ class ResponseMapper implements ResponseMapperInterface
         return new JsonResponse([
             'status' => 'Not found',
             'details' => $exception->getMessage(),
-        ]);
+        ], Response::HTTP_BAD_REQUEST);
     }
 }

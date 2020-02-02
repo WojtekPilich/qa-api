@@ -59,7 +59,7 @@ class QuestionsController extends AbstractFOSRestController
             try {
                 $validScope = $validator->validate($scope);
             } catch (\Exception $exception) {
-                return new JsonResponse($exception->getMessage(), Response::HTTP_BAD_REQUEST);
+                return $mapper->mapExceptionToJson($exception);
             }
         }
 
