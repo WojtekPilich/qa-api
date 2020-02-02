@@ -58,7 +58,6 @@ class QuestionsManager implements ManagerInterface
 
         $data = [];
         $answersData = [];
-        $questionerData = [];
 
         /** @var Question $question */
         foreach ($questions as $question) {
