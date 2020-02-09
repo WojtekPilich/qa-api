@@ -52,10 +52,10 @@ class ResponseTransformer implements ResponseTransformerInterface
         }
 
         foreach ($result['questions'] as $key => &$value) {
-            if (!$scope || !in_array('author', $scopeArray)) {
+            if (! $scope || ! in_array('author', $scopeArray)) {
                 unset($value['questioner']);
             }
-            if (!$scope || !in_array('answers', $scopeArray)) {
+            if (! $scope || ! in_array('answers', $scopeArray)) {
                 unset($value['answers']);
             }
         }
