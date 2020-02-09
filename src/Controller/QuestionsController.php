@@ -20,8 +20,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class QuestionsController extends AbstractFOSRestController
 {
-    /** @var MessageBusInterface $messageBus */
-    private $messageBus;
     /**
      * @var QuestionsManager
      */
@@ -29,12 +27,10 @@ class QuestionsController extends AbstractFOSRestController
 
     /**
      * QuestionController constructor.
-     * @param MessageBusInterface $messageBus
      * @param QuestionsManager $manager
      */
-    public function __construct(MessageBusInterface $messageBus, QuestionsManager $manager)
+    public function __construct(QuestionsManager $manager)
     {
-        $this->messageBus = $messageBus;
         $this->manager = $manager;
     }
 
