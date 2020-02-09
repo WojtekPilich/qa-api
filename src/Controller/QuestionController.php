@@ -4,12 +4,13 @@ namespace App\Controller;
 
 use App\Manager\QuestionsManager;
 use App\Message\Query\GetQuestion;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use FOS\RestBundle\Controller\AbstractFOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 
-class QuestionController extends AbstractController
+class QuestionController extends AbstractFOSRestController
 {
 
     /** @var MessageBusInterface $messageBus */

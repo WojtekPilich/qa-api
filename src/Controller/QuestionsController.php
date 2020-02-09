@@ -4,17 +4,14 @@ namespace App\Controller;
 
 use App\Manager\QuestionsManager;
 use App\Mapper\ResponseMapper;
-use App\Message\Query\GetQuestion;
 use App\Storage\QuestionsRequestStorage;
 use App\Validator\QuestionsValidator;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Request\ParamFetcher;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Messenger\Stamp\HandledStamp;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
