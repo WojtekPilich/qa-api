@@ -14,7 +14,7 @@ final class QuestionDTO
 
     private $answers;
 
-    public function __construct(int $id, string $content, \DateTimeInterface $createdAt, array $questioner, array $answers)
+    public function __construct(int $id, string $content, \DateTimeInterface $createdAt, array $questioner, ?array $answers)
     {
         $this->id = $id;
         $this->content = $content;

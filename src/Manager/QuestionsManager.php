@@ -55,9 +55,7 @@ class QuestionsManager implements ManagerInterface
     public function getQuestions(): array
     {
         $questions = $this->questionRepository->findAll();
-
         $data = [];
-        $answersData = [];
 
         if (empty($questions)) {
             throw new \Exception('No questions found!');
@@ -65,8 +63,9 @@ class QuestionsManager implements ManagerInterface
 
         /** @var Question $question */
         foreach ($questions as $question) {
+        $answersData = [];
 
-            /** @var Answer[] $answers */
+            /** @var Answer $answer */
             $answers = $question->getAnswers();
             foreach ($answers as $answer) {
                 $answersData[] = [

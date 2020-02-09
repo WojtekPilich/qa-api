@@ -39,28 +39,24 @@ class ResponseTransformer implements ResponseTransformerInterface
         $result = [
             'status' => 'OK',
         ];
-        $questionerData = [];
-        $answersData = [];
 
         /** @var QuestionDTO $qDto */
         foreach ($this->data as $qDto) {
-
-            $questionerData = $qDto->getQuestioner();
-            $answersData = $qDto->getAnswers();
-
             $result['questions'][] = [
                 'id' => $qDto->getId(),
                 'content' => $qDto->getContent(),
                 'created_at' => $qDto->getCreatedAt()->format('Y-m-d H:i:s'),
+                'questioner' => $qDto->getQuestioner(),
+                'answers' => $qDto->getAnswers(),
             ];
         }
 
         foreach ($result['questions'] as $key => &$value) {
-            if ($scope && in_array('author', $scopeArray)) {
-                $value['questioner'] = $questionerData;
+            if (!$scope || !in_array('author', $scopeArray)) {
+                unset($value['questioner']);
             }
-            if ($scope && in_array('answers', $scopeArray)) {
-                $value['answers'] = $answersData;
+            if (!$scope || !in_array('answers', $scopeArray)) {
+                unset($value['answers']);
             }
         }
 
