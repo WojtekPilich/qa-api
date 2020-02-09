@@ -70,18 +70,4 @@ class QuestionsController extends AbstractFOSRestController
             return $mapper->mapExceptionToJson($exception);
         }
     }
-
-    /**
-     * Gets one question
-     * @Rest\Get("/questions/{id}", name="question_get")
-     * @param int $id
-     * @return Response
-     */
-    public function getQuestionAction(int $id): Response
-    {
-        $envelope = $this->messageBus->dispatch(new GetQuestion($id));
-        $handledStamp = $envelope->last(HandledStamp::class);
-
-        return $handledStamp->getResult();
-    }
 }
