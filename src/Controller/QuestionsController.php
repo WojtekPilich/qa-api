@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Exception\NotFound;
 use App\Manager\QuestionsManager;
 use App\Mapper\JsonMapper;
 use App\Storage\QuestionsRequestStorage;
