@@ -2,7 +2,7 @@
 
 final class WrongQueryParameter extends Exception
 {
-    public static function withString(string $key)
+    public static function with(string $key)
     {
         $message = sprintf('Wrong query parameter: %s', $key);
 

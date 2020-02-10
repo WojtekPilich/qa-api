@@ -15,7 +15,7 @@ class QuestionsValidator implements ValidatorInterface
     {
         foreach ($scope as $key) {
             if ($key !== 'author' && $key !== 'answers') {
-                throw WrongQueryParameter::withString($key);
+                throw WrongQueryParameter::with($key);
             }
         }
 
