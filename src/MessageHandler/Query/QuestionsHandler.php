@@ -8,7 +8,7 @@ use App\Message\Query\GetQuestions;
 use App\Transformer\ResponseTransformer;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-class GetQuestionsHandler implements MessageHandlerInterface
+class QuestionsHandler implements MessageHandlerInterface
 {
     /**
      * @var QuestionsManager

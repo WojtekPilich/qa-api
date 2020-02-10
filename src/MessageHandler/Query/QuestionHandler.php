@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-class GetQuestionHandler implements MessageHandlerInterface
+class QuestionHandler implements MessageHandlerInterface
 {
     /** @var QuestionRepository $repository */
     private $repository;
