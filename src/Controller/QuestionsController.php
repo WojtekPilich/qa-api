@@ -52,7 +52,7 @@ class QuestionsController extends AbstractFOSRestController
             try {
                 $validScope = $validator->validate($scope);
             } catch (\WrongQueryParameter $exception) {
-                return $mapper->catch($exception);
+                return $mapper->handle($exception);
             }
         }
 
@@ -60,7 +60,7 @@ class QuestionsController extends AbstractFOSRestController
             $results = $this->manager->prepareResult(new QuestionsRequestStorage($validScope ?? null));
             return $mapper->map($results);
         } catch(\Exception $exception) {
-            return $mapper->catch($exception);
+            return $mapper->handle($exception);
         }
     }
 }

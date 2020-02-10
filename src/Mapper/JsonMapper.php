@@ -7,7 +7,7 @@ use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class JsonMapper implements Mappable, Catchable
+class JsonMapper implements Mappable, Defective
 {
     /**
      * @param QuestionsDTO $questionsDTO
@@ -23,7 +23,7 @@ class JsonMapper implements Mappable, Catchable
      * @param Exception $exception
      * @return JsonResponse
      */
-    public function catch(Exception $exception): JsonResponse
+    public function handle(Exception $exception): JsonResponse
     {
         return new JsonResponse([
             'status' => Response::$statusTexts[$exception->getCode()],

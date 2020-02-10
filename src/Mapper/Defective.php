@@ -5,7 +5,7 @@ namespace App\Mapper;
 use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-interface Catchable
+interface Defective
 {
-    public function catch(Exception $exception): JsonResponse;
+    public function handle(Exception $exception): JsonResponse;
 }
