@@ -2,20 +2,20 @@
 
 namespace App\Validator;
 
-use Exception;
+use WrongQueryParameter;
 
 class QuestionsValidator implements ValidatorInterface
 {
     /**
      * @param array $scope
      * @return ValidScope
-     * @throws Exception
+     * @throws WrongQueryParameter
      */
     public function validate(array $scope): ValidScope
     {
         foreach ($scope as $key) {
             if ($key !== 'author' && $key !== 'answers') {
-                throw \WrongQueryParameter::withString($key);
+                throw WrongQueryParameter::withString($key);
             }
         }
 

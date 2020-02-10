@@ -25,8 +25,8 @@ class ResponseMapper implements ResponseMapperInterface
     public function mapExceptionToJson(\Exception $exception)
     {
         return new JsonResponse([
-            'status' => 'Not found',
+            'status' => Response::$statusTexts[$exception->getCode()],
             'details' => $exception->getMessage(),
-        ], Response::HTTP_BAD_REQUEST);
+        ], $exception->getCode());
     }
 }

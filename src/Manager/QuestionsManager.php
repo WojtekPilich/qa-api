@@ -7,9 +7,11 @@ use App\DTO\QuestionsDTO;
 use App\Entity\Answer;
 use App\Entity\Question;
 use App\Entity\Questioner;
+use App\Exception\NotFound;
 use App\Message\Query\GetQuestions;
 use App\Repository\QuestionRepository;
 use App\Storage\QuestionsRequestStorage;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 
@@ -58,7 +60,7 @@ class QuestionsManager implements ManagerInterface
         $data = [];
 
         if (empty($questions)) {
-            throw new \Exception('No questions found!');
+            throw NotFound::with('No questions found!', Response::HTTP_NOT_FOUND);
         }
 
         /** @var Question $question */
