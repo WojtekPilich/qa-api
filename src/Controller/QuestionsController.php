@@ -45,7 +45,6 @@ class QuestionsController extends AbstractFOSRestController
     public function getQuestionsAction(ParamFetcher $paramFetcher, QuestionsValidator $validator, JsonMapper $mapper): Response
     {
         $scope = $paramFetcher->get('scope');
-        $validScope = null;
 
         if ($scope) {
             try {
