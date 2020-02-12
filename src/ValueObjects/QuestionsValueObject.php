@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DTO;
+namespace App\ValueObjects;
 
-final class QuestionsDTO
+final class QuestionsValueObject
 {
     /**
      * @var array

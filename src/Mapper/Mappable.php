@@ -2,10 +2,10 @@
 
 namespace App\Mapper;
 
-use App\DTO\QuestionsDTO;
+use App\ValueObjects\QuestionsValueObject;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 interface Mappable
 {
-    public function map(QuestionsDTO $questionsDTO): JsonResponse;
+    public function map(QuestionsValueObject $questionsDTO): JsonResponse;
 }

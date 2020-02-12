@@ -2,8 +2,8 @@
 
 namespace App\Manager;
 
-use App\DTO\QuestionDTO;
-use App\DTO\QuestionsDTO;
+use App\ValueObjects\QuestionValueObject;
+use App\ValueObjects\QuestionsValueObject;
 use App\Entity\Answer;
 use App\Entity\Question;
 use App\Entity\Questioner;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 
-class QuestionsManager implements ManagerInterface
+final class QuestionsManager implements ManagerInterface
 {
     /**
      * @var MessageBusInterface
@@ -39,9 +39,9 @@ class QuestionsManager implements ManagerInterface
 
     /**
      * @param QuestionsRequestStorage $storage
-     * @return QuestionsDTO
+     * @return QuestionsValueObject
      */
-    public function prepareResult(QuestionsRequestStorage $storage): QuestionsDTO
+    public function prepareResult(QuestionsRequestStorage $storage): QuestionsValueObject
     {
         $message = new GetQuestions($storage->getData());
         $envelope = $this->messageBus->dispatch($message);
@@ -86,7 +86,7 @@ class QuestionsManager implements ManagerInterface
                 'nick' => $author->getNick(),
             ];
 
-            $dto = new QuestionDTO(
+            $dto = new QuestionValueObject(
                 $question->getId(),
                 $question->getContent(),
                 $question->getCreatedAt(),

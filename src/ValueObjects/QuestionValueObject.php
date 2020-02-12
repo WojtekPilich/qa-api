@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DTO;
+namespace App\ValueObjects;
 
-final class QuestionDTO
+final class QuestionValueObject
 {
     private $id;
 

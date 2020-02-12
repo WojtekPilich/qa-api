@@ -2,13 +2,13 @@
 
 namespace App\MessageHandler\Query;
 
-use App\DTO\QuestionsDTO;
+use App\ValueObjects\QuestionsValueObject;
 use App\Manager\QuestionsManager;
 use App\Message\Query\GetQuestions;
 use App\Transformer\ResponseTransformer;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-class QuestionsHandler implements MessageHandlerInterface
+final class QuestionsHandler implements MessageHandlerInterface
 {
     /**
      * @var QuestionsManager
@@ -27,10 +27,10 @@ class QuestionsHandler implements MessageHandlerInterface
     /**
      * Triggers getAllQuestionsQuery to get question data
      * @param GetQuestions $getQuestions
-     * @return QuestionsDTO
+     * @return QuestionsValueObject
      * @throws \Exception
      */
-    public function __invoke(GetQuestions $getQuestions): QuestionsDTO
+    public function __invoke(GetQuestions $getQuestions): QuestionsValueObject
     {
         $transformer = new ResponseTransformer($this->questionsManager->getQuestions());
         return $transformer->transform($getQuestions->getScope());

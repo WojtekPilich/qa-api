@@ -2,11 +2,11 @@
 
 namespace App\Transformer;
 
-use App\DTO\QuestionDTO;
-use App\DTO\QuestionsDTO;
+use App\ValueObjects\QuestionValueObject;
+use App\ValueObjects\QuestionsValueObject;
 use App\Validator\ValidScope;
 
-class ResponseTransformer implements ResponseTransformerInterface
+final class ResponseTransformer implements ResponseTransformerInterface
 {
     /** @var array $data */
     private $data;
@@ -31,16 +31,16 @@ class ResponseTransformer implements ResponseTransformerInterface
 
     /**
      * @param ValidScope $scope
-     * @return QuestionsDTO
+     * @return QuestionsValueObject
      */
-    public function transform(?ValidScope $scope): QuestionsDTO
+    public function transform(?ValidScope $scope): QuestionsValueObject
     {
         $scopeArray = $scope ? $scope->getScope() : null;
         $result = [
             'status' => 'OK',
         ];
 
-        /** @var QuestionDTO $qDto */
+        /** @var QuestionValueObject $qDto */
         foreach ($this->data as $qDto) {
             $result['questions'][] = [
                 'id' => $qDto->getId(),
@@ -60,6 +60,6 @@ class ResponseTransformer implements ResponseTransformerInterface
             }
         }
 
-        return new QuestionsDTO($result);
+        return new QuestionsValueObject($result);
     }
 }

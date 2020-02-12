@@ -2,18 +2,18 @@
 
 namespace App\Mapper;
 
-use App\DTO\QuestionsDTO;
+use App\ValueObjects\QuestionsValueObject;
 use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class JsonMapper implements Mappable, Defective
+final class JsonMapper implements Mappable, Defective
 {
     /**
-     * @param QuestionsDTO $questionsDTO
+     * @param QuestionsValueObject $questionsDTO
      * @return JsonResponse
      */
-    public function map(QuestionsDTO $questionsDTO): JsonResponse
+    public function map(QuestionsValueObject $questionsDTO): JsonResponse
     {
         $resultArray = $questionsDTO->getQuestions();
         return new JsonResponse($resultArray, Response::HTTP_OK);
