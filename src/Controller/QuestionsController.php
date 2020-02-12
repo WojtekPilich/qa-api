@@ -55,7 +55,7 @@ class QuestionsController extends AbstractFOSRestController
         }
 
         try {
-            $results = $this->manager->prepareResult(new QuestionsRequestStorage($validScope ?? null));
+            $results = $this->manager->prepare(new QuestionsRequestStorage($validScope ?? null));
             return $mapper->map($results);
         } catch(\Exception $exception) {
             return $mapper->handle($exception);

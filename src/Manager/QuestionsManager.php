@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 
-final class QuestionsManager implements ManagerInterface
+final class QuestionsManager implements Manageable
 {
     /**
      * @var MessageBusInterface
@@ -41,7 +41,7 @@ final class QuestionsManager implements ManagerInterface
      * @param QuestionsRequestStorage $storage
      * @return QuestionsValueObject
      */
-    public function prepareResult(QuestionsRequestStorage $storage): QuestionsValueObject
+    public function prepare(QuestionsRequestStorage $storage): QuestionsValueObject
     {
         $message = new GetQuestions($storage->getData());
         $envelope = $this->messageBus->dispatch($message);
