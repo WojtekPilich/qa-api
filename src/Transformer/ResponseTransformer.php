@@ -6,18 +6,10 @@ use App\ValueObjects\QuestionValueObject;
 use App\ValueObjects\QuestionsValueObject;
 use App\Validator\ValidScope;
 
-final class ResponseTransformer implements ResponseTransformerInterface
+final class ResponseTransformer implements Transformable
 {
     /** @var array $data */
     private $data;
-
-    /**
-     * @param array $data
-     */
-    public function setData(array $data)
-    {
-        $this->data = $data;
-    }
 
     /**
      * ResponseTransformer constructor.
@@ -25,9 +17,8 @@ final class ResponseTransformer implements ResponseTransformerInterface
      */
     public function __construct(array $data)
     {
-        $this->setData($data);
+        $this->data = $data;
     }
-
 
     /**
      * @param ValidScope $scope
@@ -40,14 +31,14 @@ final class ResponseTransformer implements ResponseTransformerInterface
             'status' => 'OK',
         ];
 
-        /** @var QuestionValueObject $qDto */
-        foreach ($this->data as $qDto) {
+        /** @var QuestionValueObject $qVo */
+        foreach ($this->data as $qVo) {
             $result['questions'][] = [
-                'id' => $qDto->getId(),
-                'content' => $qDto->getContent(),
-                'created_at' => $qDto->getCreatedAt()->format('Y-m-d H:i:s'),
-                'questioner' => $qDto->getQuestioner(),
-                'answers' => $qDto->getAnswers(),
+                'id' => $qVo->id(),
+                'content' => $qVo->content(),
+                'created_at' => $qVo->createdAt()->format('Y-m-d H:i:s'),
+                'questioner' => $qVo->questioner(),
+                'answers' => $qVo->answers(),
             ];
         }
 

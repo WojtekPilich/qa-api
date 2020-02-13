@@ -11,6 +11,6 @@ class GetQuestionsTest extends Unit
     {
         $message = new GetQuestions(['author']);
         $this->assertClassHasAttribute('scope', GetQuestions::class);
-        $this->assertEquals(['author'], $message->getScope());
+        $this->assertEquals(['author'], $message->scope());
     }
 }

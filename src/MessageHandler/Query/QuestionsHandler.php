@@ -6,6 +6,7 @@ use App\ValueObjects\QuestionsValueObject;
 use App\Manager\QuestionsManager;
 use App\Message\Query\GetQuestions;
 use App\Transformer\ResponseTransformer;
+use Exception;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 final class QuestionsHandler implements MessageHandlerInterface
@@ -26,13 +27,13 @@ final class QuestionsHandler implements MessageHandlerInterface
 
     /**
      * Triggers getAllQuestionsQuery to get question data
-     * @param GetQuestions $getQuestions
+     * @param GetQuestions $questions
      * @return QuestionsValueObject
-     * @throws \Exception
+     * @throws Exception
      */
-    public function __invoke(GetQuestions $getQuestions): QuestionsValueObject
+    public function __invoke(GetQuestions $questions): QuestionsValueObject
     {
         $transformer = new ResponseTransformer($this->questionsManager->getQuestions());
-        return $transformer->transform($getQuestions->getScope());
+        return $transformer->transform($questions->scope());
     }
 }

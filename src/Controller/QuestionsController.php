@@ -12,6 +12,7 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Request\ParamFetcher;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use WrongQueryParameter;
 
 /**
  * Question controller.
@@ -49,7 +50,7 @@ class QuestionsController extends AbstractFOSRestController
         if ($scope) {
             try {
                 $validScope = $validator->validate($scope);
-            } catch (\WrongQueryParameter $exception) {
+            } catch (WrongQueryParameter $exception) {
                 return $mapper->handle($exception);
             }
         }

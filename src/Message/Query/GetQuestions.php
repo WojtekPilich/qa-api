@@ -11,7 +11,7 @@ final class GetQuestions
         $this->scope = $scope;
     }
 
-    public function getScope()
+    public function scope()
     {
         return $this->scope;
     }

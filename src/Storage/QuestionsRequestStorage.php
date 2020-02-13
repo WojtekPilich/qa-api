@@ -12,7 +12,7 @@ class QuestionsRequestStorage
         $this->data = $scope;
     }
 
-    public function getData()
+    public function data()
     {
         return $this->data;
     }

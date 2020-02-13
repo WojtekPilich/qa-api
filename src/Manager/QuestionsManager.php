@@ -43,7 +43,7 @@ final class QuestionsManager implements Manageable
      */
     public function prepare(QuestionsRequestStorage $storage): QuestionsValueObject
     {
-        $message = new GetQuestions($storage->getData());
+        $message = new GetQuestions($storage->data());
         $envelope = $this->messageBus->dispatch($message);
 
         $handledStamp = $envelope->last(HandledStamp::class);

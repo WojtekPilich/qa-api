@@ -5,7 +5,7 @@ namespace App\ValueObjects;
 final class QuestionsValueObject
 {
     /**
-     * @var array
+     * @var array $questions
      */
     private $questions = [];
 
@@ -21,7 +21,7 @@ final class QuestionsValueObject
     /**
      * @return array
      */
-    public function getQuestions(): array
+    public function questions(): array
     {
         return $this->questions;
     }

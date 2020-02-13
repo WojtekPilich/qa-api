@@ -4,7 +4,7 @@ namespace App\Transformer;
 
 use App\Validator\ValidScope;
 
-interface ResponseTransformerInterface
+interface Transformable
 {
     public function transform(?ValidScope $scope);
 }

@@ -26,7 +26,7 @@ final class QuestionValueObject
     /**
      * @return int
      */
-    public function getId(): int
+    public function id(): int
     {
         return $this->id;
     }
@@ -34,7 +34,7 @@ final class QuestionValueObject
     /**
      * @return string
      */
-    public function getContent(): string
+    public function content(): string
     {
         return $this->content;
     }
@@ -42,7 +42,7 @@ final class QuestionValueObject
     /**
      * @return \DateTimeInterface
      */
-    public function getCreatedAt(): \DateTimeInterface
+    public function createdAt(): \DateTimeInterface
     {
         return $this->createdAt;
     }
@@ -50,7 +50,7 @@ final class QuestionValueObject
     /**
      * @return array|null
      */
-    public function getQuestioner(): ?array
+    public function questioner(): ?array
     {
         return $this->questioner;
     }
@@ -58,7 +58,7 @@ final class QuestionValueObject
     /**
      * @return array|null
      */
-    public function getAnswers(): ?array
+    public function answers(): ?array
     {
         return $this->answers;
     }
