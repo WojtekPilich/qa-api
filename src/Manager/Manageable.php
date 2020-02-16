@@ -3,8 +3,9 @@
 namespace App\Manager;
 
 use App\Storage\QuestionsRequestStorage;
+use App\ValueObjects\QuestionsValueObject;
 
 interface Manageable
 {
-    public function prepare(QuestionsRequestStorage $storage);
+    public function prepareResponseFor(QuestionsRequestStorage $storage): QuestionsValueObject;
 }

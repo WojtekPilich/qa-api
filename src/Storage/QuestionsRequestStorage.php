@@ -3,7 +3,7 @@
 
 namespace App\Storage;
 
-class QuestionsRequestStorage
+final class QuestionsRequestStorage
 {
     private $data;
 
