@@ -10,12 +10,12 @@ use Symfony\Component\HttpFoundation\Response;
 final class JsonMapper implements Mappable, Defective
 {
     /**
-     * @param QuestionsValueObject $questionsDTO
+     * @param QuestionsValueObject $questionsValueObject
      * @return JsonResponse
      */
-    public function map(QuestionsValueObject $questionsDTO): JsonResponse
+    public function map(QuestionsValueObject $questionsValueObject): JsonResponse
     {
-        $resultArray = $questionsDTO->questions();
+        $resultArray = $questionsValueObject->questions();
         return new JsonResponse($resultArray, Response::HTTP_OK);
     }
 
