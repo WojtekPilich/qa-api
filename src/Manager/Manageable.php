@@ -2,10 +2,10 @@
 
 namespace App\Manager;
 
-use App\Storage\QuestionsRequestStorage;
+use App\Validator\ValidScope;
 use App\ValueObjects\QuestionsValueObject;
 
 interface Manageable
 {
-    public function prepareResponseFor(QuestionsRequestStorage $storage): QuestionsValueObject;
+    public function prepareResponseFor(?ValidScope $storage): QuestionsValueObject;
 }

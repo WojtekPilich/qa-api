@@ -2,23 +2,24 @@
 
 namespace App\Validator;
 
+use App\Scope\Scope;
 use WrongQueryParameter;
 
-class QuestionsValidator implements ValidatorInterface
+final class QuestionsValidator implements ValidatorInterface
 {
     /**
-     * @param array $scope
+     * @param Scope $scope
      * @return ValidScope
      * @throws WrongQueryParameter
      */
-    public function validate(array $scope): ValidScope
+    public function validate(Scope $scope): ValidScope
     {
-        foreach ($scope as $key) {
-            if ($key !== 'author' && $key !== 'answers') {
-                throw WrongQueryParameter::with($key);
+        foreach ($scope->parameters() as $parameter) {
+            if ($parameter !== 'author' && $parameter !== 'answers') {
+                throw WrongQueryParameter::with($parameter);
             }
         }
 
-        return new ValidScope($scope);
+        return new ValidScope($scope->parameters());
     }
 }

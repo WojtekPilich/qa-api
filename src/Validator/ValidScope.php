@@ -2,7 +2,7 @@
 
 namespace App\Validator;
 
-class ValidScope
+final class ValidScope
 {
     /**
      * @var array

@@ -15,8 +15,7 @@ final class JsonMapper implements Mappable, Defective
      */
     public function map(QuestionsValueObject $questionsValueObject): JsonResponse
     {
-        $resultArray = $questionsValueObject->questions();
-        return new JsonResponse($resultArray, Response::HTTP_OK);
+        return new JsonResponse($questionsValueObject->questions(), Response::HTTP_OK);
     }
 
     /**

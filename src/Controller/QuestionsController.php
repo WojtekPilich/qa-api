@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Manager\QuestionsManager;
 use App\Mapper\JsonMapper;
-use App\Storage\QuestionsRequestStorage;
+use App\Scope\Scope;
 use App\Validator\QuestionsValidator;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -45,20 +45,14 @@ class QuestionsController extends AbstractFOSRestController
      */
     public function getQuestionsAction(ParamFetcher $paramFetcher, QuestionsValidator $validator, JsonMapper $mapper): Response
     {
-        $scope = $paramFetcher->get('scope');
-
-        if ($scope) {
-            try {
-                $validScope = $validator->validate($scope);
-            } catch (WrongQueryParameter $exception) {
-                return $mapper->handle($exception);
-            }
-        }
-
         try {
-            $results = $this->manager->prepareResponseFor(new QuestionsRequestStorage($validScope ?? null));
-            return $mapper->map($results);
-        } catch(\Exception $exception) {
+            $scope = new Scope($paramFetcher->get('scope'));
+
+            if ($scope->hasParameters()) {
+                $validScope = $validator->validate($scope);
+            }
+            return $mapper->map($this->manager->prepareResponseFor($validScope ?? null));
+        } catch(\Exception | WrongQueryParameter $exception) {
             return $mapper->handle($exception);
         }
     }

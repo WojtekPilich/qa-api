@@ -2,6 +2,7 @@
 
 namespace App\Manager;
 
+use App\Validator\ValidScope;
 use App\ValueObjects\QuestionValueObject;
 use App\ValueObjects\QuestionsValueObject;
 use App\Entity\Answer;
@@ -10,7 +11,7 @@ use App\Entity\Questioner;
 use App\Exception\NotFound;
 use App\Message\Query\GetQuestions;
 use App\Repository\QuestionRepository;
-use App\Storage\QuestionsRequestStorage;
+use App\Scope\Scope;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
@@ -38,12 +39,12 @@ final class QuestionsManager implements Manageable
     }
 
     /**
-     * @param QuestionsRequestStorage $storage
+     * @param ValidScope|null $validScope
      * @return QuestionsValueObject
      */
-    public function prepareResponseFor(QuestionsRequestStorage $storage): QuestionsValueObject
+    public function prepareResponseFor(?ValidScope $validScope): QuestionsValueObject
     {
-        $message = new GetQuestions($storage->data());
+        $message = new GetQuestions($validScope);
         $envelope = $this->messageBus->dispatch($message);
 
         $handledStamp = $envelope->last(HandledStamp::class);
