@@ -2,27 +2,27 @@
 
 namespace App\MessageHandler\Query;
 
-use App\ValueObjects\QuestionsValueObject;
-use App\Manager\QuestionsManager;
 use App\Message\Query\GetQuestions;
+use App\Repos\QuestionsRepo;
 use App\Transformer\ResponseTransformer;
+use App\ValueObjects\QuestionsValueObject;
 use Exception;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 final class QuestionsHandler implements MessageHandlerInterface
 {
     /**
-     * @var QuestionsManager
+     * @var QuestionsRepo
      */
-    private $questionsManager;
+    private $questionsRepo;
 
     /**
      * QuestionController constructor.
-     * @param QuestionsManager $questionsManager
+     * @param QuestionsRepo $questionsRepo
      */
-    public function __construct(QuestionsManager $questionsManager)
+    public function __construct(QuestionsRepo $questionsRepo)
     {
-        $this->questionsManager = $questionsManager;
+        $this->questionsRepo = $questionsRepo;
     }
 
     /**
@@ -33,7 +33,7 @@ final class QuestionsHandler implements MessageHandlerInterface
      */
     public function __invoke(GetQuestions $questions): QuestionsValueObject
     {
-        $transformer = new ResponseTransformer($this->questionsManager->getQuestions());
+        $transformer = new ResponseTransformer($this->questionsRepo->getQuestions());
         return $transformer->transform($questions->scope());
     }
 }
