@@ -2,16 +2,15 @@
 
 namespace App\Manager;
 
-use App\Validator\ValidScope;
-use App\ValueObjects\QuestionValueObject;
-use App\ValueObjects\QuestionsValueObject;
 use App\Entity\Answer;
 use App\Entity\Question;
 use App\Entity\Questioner;
 use App\Exception\NotFound;
 use App\Message\Query\GetQuestions;
 use App\Repository\QuestionRepository;
-use App\Scope\Scope;
+use App\Validator\ValidScope;
+use App\ValueObjects\QuestionsValueObject;
+use App\ValueObjects\QuestionValueObject;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;

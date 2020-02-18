@@ -51,7 +51,9 @@ class QuestionsController extends AbstractFOSRestController
             if ($scope->hasParameters()) {
                 $validScope = $validator->validate($scope);
             }
+
             return $mapper->map($this->manager->prepareResponseFor($validScope ?? null));
+
         } catch(\Exception | WrongQueryParameter $exception) {
             return $mapper->handle($exception);
         }
