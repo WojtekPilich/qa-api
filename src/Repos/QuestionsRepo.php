@@ -10,7 +10,7 @@ use App\Repository\QuestionRepository;
 use App\ValueObjects\QuestionValueObject;
 use Symfony\Component\HttpFoundation\Response;
 
-class QuestionsRepo implements QuestionsInterface
+final class QuestionsRepo implements QuestionsInterface
 {
     /**
      * @var QuestionRepository
@@ -30,7 +30,7 @@ class QuestionsRepo implements QuestionsInterface
      * @return array
      * @throws \Exception
      */
-    public function getQuestions(): array
+    public function getQuestions(): iterable
     {
         $questions = $this->questionRepository->findAll();
         $data = [];

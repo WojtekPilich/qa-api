@@ -4,5 +4,5 @@ namespace App\Repos;
 
 interface QuestionsInterface
 {
-    public function getQuestions(): array;
+    public function getQuestions(): iterable;
 }
