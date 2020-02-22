@@ -10,7 +10,7 @@ use App\Repository\QuestionRepository;
 use App\ValueObjects\QuestionValueObject;
 use Symfony\Component\HttpFoundation\Response;
 
-final class QuestionsRepo implements QuestionsInterface
+final class QuestionsRepo implements QuestionsFetchable
 {
     /**
      * @var QuestionRepository

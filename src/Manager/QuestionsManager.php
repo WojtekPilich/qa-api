@@ -8,7 +8,7 @@ use App\ValueObjects\QuestionsValueObject;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 
-final class QuestionsManager implements Manageable
+final class QuestionsManager implements QuestionsManageable
 {
     /**
      * @var MessageBusInterface
