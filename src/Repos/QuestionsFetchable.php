@@ -2,7 +2,7 @@
 
 namespace App\Repos;
 
-interface QuestionsInterface
+interface QuestionsFetchable
 {
     public function getQuestions(): iterable;
 }
