@@ -6,16 +6,16 @@ use App\ValueObjects\QuestionValueObject;
 use App\ValueObjects\QuestionsValueObject;
 use App\Validator\ValidScope;
 
-final class ResponseTransformer implements Transformable
+final class ResponseTransformer implements QuestionsTransformable, QuestionTransformable
 {
     /** @var array $data */
     private $data;
 
     /**
      * ResponseTransformer constructor.
-     * @param array $data
+     * @param iterable | QuestionValueObject $data
      */
-    public function __construct(array $data)
+    public function __construct($data)
     {
         $this->data = $data;
     }
@@ -24,7 +24,7 @@ final class ResponseTransformer implements Transformable
      * @param ValidScope $scope
      * @return QuestionsValueObject
      */
-    public function transform(?ValidScope $scope): QuestionsValueObject
+    public function transformQuestions(?ValidScope $scope): QuestionsValueObject
     {
         $scopeArray = $scope ? $scope->getScope() : null;
         $result = [
@@ -52,5 +52,20 @@ final class ResponseTransformer implements Transformable
         }
 
         return new QuestionsValueObject($result);
+    }
+
+    /**
+     * @return iterable
+     */
+    public function transformQuestion(): iterable
+    {
+        return [
+            'status' => 'OK',
+            'id' => $this->data->id(),
+            'content' => $this->data->content(),
+            'created_at' => $this->data->createdAt()->format('Y-m-d'),
+            'questioner' => $this->data->questioner(),
+            'answers' => $this->data->answers(),
+        ];
     }
 }

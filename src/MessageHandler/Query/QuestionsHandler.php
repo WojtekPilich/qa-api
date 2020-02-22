@@ -34,6 +34,6 @@ final class QuestionsHandler implements MessageHandlerInterface
     public function __invoke(GetQuestions $questions): QuestionsValueObject
     {
         $transformer = new ResponseTransformer($this->questionsRepo->getQuestions());
-        return $transformer->transform($questions->scope());
+        return $transformer->transformQuestions($questions->scope());
     }
 }

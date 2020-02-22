@@ -27,8 +27,9 @@ final class QuestionsRepo implements QuestionsFetchable
     }
 
     /**
-     * @return array
+     * @return iterable
      * @throws \Exception
+     * @return iterable
      */
     public function getQuestions(): iterable
     {
@@ -62,7 +63,7 @@ final class QuestionsRepo implements QuestionsFetchable
                 'nick' => $author->getNick(),
             ];
 
-            $dto = new QuestionValueObject(
+            $valueObject = new QuestionValueObject(
                 $question->getId(),
                 $question->getContent(),
                 $question->getCreatedAt(),
@@ -70,7 +71,7 @@ final class QuestionsRepo implements QuestionsFetchable
                 $answersData
             );
 
-            $data[]= $dto;
+            $data[]= $valueObject;
         }
 
         return $data;

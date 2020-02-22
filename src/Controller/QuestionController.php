@@ -2,45 +2,42 @@
 
 namespace App\Controller;
 
-use App\Manager\QuestionsManager;
-use App\Message\Query\GetQuestion;
+use App\Manager\QuestionManager;
+use App\Mapper\JsonMapper;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Messenger\Stamp\HandledStamp;
 
 class QuestionController extends AbstractFOSRestController
 {
-
-    /** @var MessageBusInterface $messageBus */
-    private $messageBus;
     /**
-     * @var QuestionsManager
+     * @var QuestionManager
      */
     private $manager;
 
     /**
      * QuestionController constructor.
-     * @param MessageBusInterface $messageBus
-     * @param QuestionsManager $manager
+     * @param QuestionManager $manager
      */
-    public function __construct(MessageBusInterface $messageBus, QuestionsManager $manager)
+    public function __construct(QuestionManager $manager)
     {
-        $this->messageBus = $messageBus;
         $this->manager = $manager;
     }
+
     /**
      * Gets one question
      * @Rest\Get("/questions/{id}", name="question_get")
      * @param int $id
+     * @param JsonMapper $mapper
      * @return Response
      */
-    public function getQuestionAction(int $id): Response
+    public function getQuestionAction(int $id, JsonMapper $mapper): Response
     {
-        $envelope = $this->messageBus->dispatch(new GetQuestion($id));
-        $handledStamp = $envelope->last(HandledStamp::class);
+        try {
+            return $mapper->map($this->manager->prepareResponseFor($id));
 
-        return $handledStamp->getResult();
+        } catch(\Exception $exception) {
+            return $mapper->handle($exception);
+        }
     }
 }

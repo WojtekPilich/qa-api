@@ -3,7 +3,6 @@
 namespace App\Mapper;
 
 use App\ValueObjects\QuestionsValueObject;
-use App\ValueObjects\QuestionValueObject;
 use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,12 +10,12 @@ use Symfony\Component\HttpFoundation\Response;
 final class JsonMapper implements Mappable, Defective
 {
     /**
-     * @param QuestionsValueObject | QuestionValueObject $valueObject
+     * @param QuestionsValueObject | iterable $data
      * @return JsonResponse
      */
-    public function map($valueObject): JsonResponse
+    public function map($data): JsonResponse
     {
-        return new JsonResponse($valueObject->questions(), Response::HTTP_OK);
+        return new JsonResponse(is_object($data) ? $data->questions() : $data, Response::HTTP_OK);
     }
 
     /**

@@ -62,4 +62,12 @@ final class QuestionValueObject
     {
         return $this->answers;
     }
+
+    /**
+     * @return array
+     */
+    public function data(): array
+    {
+        return (array)$this;
+    }
 }
