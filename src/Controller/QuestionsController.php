@@ -16,7 +16,7 @@ use WrongQueryParameter;
 
 /**
  * Question controller.
- * @Route("/",name="api_")
+ * @Route("/")
  */
 class QuestionsController extends AbstractFOSRestController
 {
