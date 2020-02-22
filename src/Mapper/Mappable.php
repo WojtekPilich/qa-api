@@ -1,11 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Mapper;
 
-use App\ValueObjects\QuestionsValueObject;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 interface Mappable
 {
-    public function map(QuestionsValueObject $questionsDTO): JsonResponse;
+    public function map($valueObject): JsonResponse;
 }
