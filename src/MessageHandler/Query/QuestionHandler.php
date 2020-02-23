@@ -1,18 +1,17 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\MessageHandler\Query;
 
+use App\Exception\NotFound;
 use App\Message\Query\GetQuestion;
 use App\Repos\QuestionRepo;
 use App\Transformer\ResponseTransformer;
-use App\ValueObjects\QuestionValueObject;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 final class QuestionHandler implements MessageHandlerInterface
 {
     /**
-     * @var QuestionRepo
+     * @var QuestionRepo $questionRepo
      */
     private $questionRepo;
 
@@ -29,6 +28,7 @@ final class QuestionHandler implements MessageHandlerInterface
      * Triggers getQuestionQuery method to get question details
      * @param GetQuestion $getQuestion
      * @return iterable
+     * @throws NotFound
      */
     public function __invoke(GetQuestion $getQuestion): iterable
     {

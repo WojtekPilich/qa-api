@@ -2,8 +2,6 @@
 
 namespace App\Transformer;
 
-use App\ValueObjects\QuestionValueObject;
-
 interface QuestionTransformable
 {
     public function transformQuestion(): iterable;

@@ -8,7 +8,6 @@ use App\Entity\Questioner;
 use App\Exception\NotFound;
 use App\Repository\QuestionRepository;
 use App\ValueObjects\QuestionValueObject;
-use Symfony\Component\HttpFoundation\Response;
 
 final class QuestionRepo implements QuestionFetchable
 {
@@ -36,7 +35,7 @@ final class QuestionRepo implements QuestionFetchable
         $question = $this->questionRepository->findOneBy(['id' => $id]);
 
         if (! ($question instanceof Question)) {
-            throw NotFound::with('Question not found!', Response::HTTP_NOT_FOUND);
+            throw NotFound::with('Question not found!');
         }
 
         /** @var Questioner $author */

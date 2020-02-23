@@ -37,7 +37,7 @@ final class QuestionsRepo implements QuestionsFetchable
         $data = [];
 
         if (empty($questions)) {
-            throw NotFound::with('No questions found!', Response::HTTP_NOT_FOUND);
+            throw NotFound::with('No questions found!');
         }
 
         /** @var Question $question */

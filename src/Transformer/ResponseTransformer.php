@@ -21,7 +21,7 @@ final class ResponseTransformer implements QuestionsTransformable, QuestionTrans
     }
 
     /**
-     * @param ValidScope $scope
+     * @param ValidScope|null $scope
      * @return QuestionsValueObject
      */
     public function transformQuestions(?ValidScope $scope): QuestionsValueObject

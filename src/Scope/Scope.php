@@ -29,7 +29,7 @@ final class Scope
     /**
      * @return bool
      */
-    public function hasParameters()
+    public function hasParameters(): bool
     {
         return $this->parameters() !== null;
     }

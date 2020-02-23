@@ -3,7 +3,6 @@
 namespace App\Manager;
 
 use App\Message\Query\GetQuestion;
-use App\ValueObjects\QuestionValueObject;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 

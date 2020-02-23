@@ -1,19 +1,32 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\ValueObjects;
 
 final class QuestionValueObject
 {
+    /** @var int $id */
     private $id;
 
+    /** @var string $content */
     private $content;
 
+    /** @var \DateTimeInterface $createdAt */
     private $createdAt;
 
+    /** @var array $questioner */
     private $questioner;
 
+    /** @var array|null $answers */
     private $answers;
 
+    /**
+     * QuestionValueObject constructor.
+     * @param int $id
+     * @param string $content
+     * @param \DateTimeInterface $createdAt
+     * @param array $questioner
+     * @param array|null $answers
+     */
     public function __construct(int $id, string $content, \DateTimeInterface $createdAt, array $questioner, ?array $answers)
     {
         $this->id = $id;

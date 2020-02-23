@@ -12,7 +12,7 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 final class QuestionsHandler implements MessageHandlerInterface
 {
     /**
-     * @var QuestionsRepo
+     * @var QuestionsRepo $questionsRepo
      */
     private $questionsRepo;
 

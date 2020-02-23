@@ -6,5 +6,5 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 interface Mappable
 {
-    public function map($valueObject): JsonResponse;
+    public function map($data): JsonResponse;
 }
