@@ -4,6 +4,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class WrongQueryParameter extends Exception
 {
+    /**
+     * @param string $key
+     * @return WrongQueryParameter
+     */
     public static function with(string $key)
     {
         $message = sprintf('Wrong query parameter: %s', $key);
