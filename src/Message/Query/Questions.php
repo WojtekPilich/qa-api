@@ -4,7 +4,7 @@ namespace App\Message\Query;
 
 use App\Validator\ValidScope;
 
-final class GetQuestions
+final class Questions
 {
     /**
      * @var ValidScope|null $scope

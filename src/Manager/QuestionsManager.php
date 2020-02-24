@@ -2,7 +2,7 @@
 
 namespace App\Manager;
 
-use App\Message\Query\GetQuestions;
+use App\Message\Query\Questions;
 use App\Validator\ValidScope;
 use App\ValueObjects\QuestionsValueObject;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -30,7 +30,7 @@ final class QuestionsManager implements QuestionsManageable
      */
     public function prepareResponseFor(?ValidScope $validScope): QuestionsValueObject
     {
-        $message = new GetQuestions($validScope);
+        $message = new Questions($validScope);
         $envelope = $this->messageBus->dispatch($message);
 
         $handledStamp = $envelope->last(HandledStamp::class);

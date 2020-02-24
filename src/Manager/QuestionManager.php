@@ -2,7 +2,7 @@
 
 namespace App\Manager;
 
-use App\Message\Query\GetQuestion;
+use App\Message\Query\Question;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 
@@ -28,7 +28,7 @@ final class QuestionManager implements QuestionManageable
      */
     public function prepareResponseFor(int $id): iterable
     {
-        $message = new GetQuestion($id);
+        $message = new Question($id);
         $envelope = $this->messageBus->dispatch($message);
 
         $handledStamp = $envelope->last(HandledStamp::class);

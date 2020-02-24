@@ -2,7 +2,7 @@
 
 namespace App\Message\Query;
 
-final class GetQuestion
+final class Question
 {
     /**
      * @var int $id
