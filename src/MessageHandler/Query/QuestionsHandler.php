@@ -12,15 +12,28 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 final class QuestionsHandler implements MessageHandlerInterface
 {
     /**
-     * Fetch questions data from repo
-     * @param Questions $questions
+     * @var QuestionsRepo $questionsRepo
+     */
+    private $questionsRepo;
+
+    /**
+     * QuestionController constructor.
      * @param QuestionsRepo $questionsRepo
+     */
+    public function __construct(QuestionsRepo $questionsRepo)
+    {
+        $this->questionsRepo = $questionsRepo;
+    }
+
+    /**
+     * Triggers getAllQuestionsQuery to get question data
+     * @param Questions $questions
      * @return QuestionsValueObject
      * @throws Exception
      */
-    public function __invoke(Questions $questions, QuestionsRepo $questionsRepo): QuestionsValueObject
+    public function __invoke(Questions $questions): QuestionsValueObject
     {
-        $transformer = new ResponseTransformer($questionsRepo->getQuestions());
+        $transformer = new ResponseTransformer($this->questionsRepo->getQuestions());
         return $transformer->transformQuestions($questions->scope());
     }
 }
