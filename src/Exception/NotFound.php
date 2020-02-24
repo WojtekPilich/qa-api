@@ -10,7 +10,7 @@ final class NotFound extends \Exception
      * @param string $message
      * @return NotFound
      */
-    public static function with(string $message)
+    public static function withMessage(string $message): self
     {
         return new self($message, Response::HTTP_NOT_FOUND);
     }
