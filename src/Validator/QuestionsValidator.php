@@ -16,7 +16,7 @@ final class QuestionsValidator implements ValidatorInterface
     {
         foreach ($scope->parameters() as $parameter) {
             if ($parameter !== 'author' && $parameter !== 'answers') {
-                throw WrongQueryParameter::with($parameter);
+                throw WrongQueryParameter::whichIs($parameter);
             }
         }
 

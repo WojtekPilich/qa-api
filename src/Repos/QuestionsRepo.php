@@ -8,7 +8,6 @@ use App\Entity\Questioner;
 use App\Exception\NotFound;
 use App\Repository\QuestionRepository;
 use App\ValueObjects\QuestionValueObject;
-use Symfony\Component\HttpFoundation\Response;
 
 final class QuestionsRepo implements QuestionsFetchable
 {
@@ -37,7 +36,7 @@ final class QuestionsRepo implements QuestionsFetchable
         $data = [];
 
         if (empty($questions)) {
-            throw NotFound::with('No questions found!');
+            throw NotFound::withMessage('No questions found!');
         }
 
         /** @var Question $question */

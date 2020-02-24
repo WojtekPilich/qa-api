@@ -35,7 +35,7 @@ final class QuestionRepo implements QuestionFetchable
         $question = $this->questionRepository->findOneBy(['id' => $id]);
 
         if (! ($question instanceof Question)) {
-            throw NotFound::with('Question not found!');
+            throw NotFound::withMessage('Question not found!');
         }
 
         /** @var Questioner $author */
