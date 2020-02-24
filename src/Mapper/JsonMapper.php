@@ -7,7 +7,7 @@ use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-final class JsonMapper implements Mappable, Defective
+final class JsonMapper implements MapOrThrow
 {
     /**
      * @param QuestionsValueObject | iterable $data
