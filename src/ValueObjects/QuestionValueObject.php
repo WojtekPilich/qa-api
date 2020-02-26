@@ -4,20 +4,15 @@ namespace App\ValueObjects;
 
 final class QuestionValueObject
 {
-    /** @var int $id */
-    private $id;
+    private int $id;
 
-    /** @var string $content */
-    private $content;
+    private string $content;
 
-    /** @var \DateTimeInterface $createdAt */
-    private $createdAt;
+    private \DateTimeInterface $createdAt;
 
-    /** @var array $questioner */
-    private $questioner;
+    private array $questioner;
 
-    /** @var array|null $answers */
-    private $answers;
+    private ?array $answers;
 
     /**
      * QuestionValueObject constructor.

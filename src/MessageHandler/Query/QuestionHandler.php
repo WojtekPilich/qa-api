@@ -10,10 +10,7 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 final class QuestionHandler implements MessageHandlerInterface
 {
-    /**
-     * @var QuestionRepo $questionRepo
-     */
-    private $questionRepo;
+    private QuestionRepo $questionRepo;
 
     /**
      * QuestionController constructor.

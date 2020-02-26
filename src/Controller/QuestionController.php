@@ -10,10 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class QuestionController extends AbstractFOSRestController
 {
-    /**
-     * @var QuestionManager
-     */
-    private $manager;
+    private QuestionManager $manager;
 
     /**
      * QuestionController constructor.

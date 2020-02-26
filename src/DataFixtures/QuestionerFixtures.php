@@ -15,11 +15,7 @@ class QuestionerFixtures extends Fixture
     public const JACK_REFERENCE = 'Questioner_Jack';
     public const JENNY_REFERENCE = 'Questioner_Jenny';
 
-    /**
-     * Stores questioners data
-     * @var array
-     */
-    protected static $questionersData = [
+    protected static array $questionersData = [
         [
             'email' => 'bob@example.com',
             'name' => 'Bob',

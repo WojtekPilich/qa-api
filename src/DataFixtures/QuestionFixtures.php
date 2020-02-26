@@ -9,31 +9,19 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class QuestionFixtures extends Fixture implements DependentFixtureInterface
 {
-    /**
-     * First set of questions.
-     * @var array
-     */
-    private static $bobQuestions = [
+    private static array $bobQuestions = [
         'Which stormtrooper wasn\'t able to complete his mission in "Star Wars: The Force Awakens?"',
         'What kind of vehicle did Rey live in?',
         'According to Master Yoda, how many Sith are always out there?',
     ];
 
-    /**
-     * Second set of questions.
-     * @var array
-     */
-    private static $jackQuestions = [
+    private static array $jackQuestions = [
         'What happened to Anakin Skywalker during the battle with Count Dooku?',
         'Who played the part of Commander Cody?',
         'Who killed Jabba?',
     ];
 
-    /**
-     * Third set of questions.
-     * @var array
-     */
-    private static $jennyQuestions = [
+    private static array $jennyQuestions = [
         'What did Luke Skywalker lose in his fight with Darth Vader?',
         'According to the Emperor, what was Luke Skywalker\'s weakness?',
         'Where did the Clone Wars begin?',

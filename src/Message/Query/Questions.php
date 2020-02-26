@@ -6,10 +6,7 @@ use App\Validator\ValidScope;
 
 final class Questions
 {
-    /**
-     * @var ValidScope|null $scope
-     */
-    private $scope;
+    private ?ValidScope $scope;
 
     /**
      * GetQuestions constructor.

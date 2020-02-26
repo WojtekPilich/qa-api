@@ -11,10 +11,7 @@ use App\ValueObjects\QuestionValueObject;
 
 final class QuestionRepo implements QuestionFetchable
 {
-    /**
-     * @var QuestionRepository
-     */
-    private $questionRepository;
+    private QuestionRepository $questionRepository;
 
     /**
      * QuestionsRepo constructor.

@@ -4,10 +4,7 @@ namespace App\ValueObjects;
 
 final class QuestionsValueObject
 {
-    /**
-     * @var array $questions
-     */
-    private $questions = [];
+    private array $questions = [];
 
     /**
      * QuestionsDTO constructor.

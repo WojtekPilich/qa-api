@@ -8,11 +8,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class AnswerFixtures extends Fixture
 {
-    /**
-     * Forbidden words in answer
-     * @var array
-     */
-    public static $forbiddenWords = [
+    public static array $forbiddenWords = [
         'fuck',
         'motherfucker',
         'pussy',

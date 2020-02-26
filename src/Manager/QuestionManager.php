@@ -8,10 +8,7 @@ use Symfony\Component\Messenger\Stamp\HandledStamp;
 
 final class QuestionManager implements QuestionManageable
 {
-    /**
-     * @var MessageBusInterface
-     */
-    private $messageBus;
+    private MessageBusInterface $messageBus;
 
     /**
      * QuestionsManager constructor.

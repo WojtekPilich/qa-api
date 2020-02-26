@@ -4,10 +4,7 @@ namespace App\Scope;
 
 final class Scope
 {
-    /**
-     * @var array|null
-     */
-    private $parameters;
+    private ?array $parameters;
 
     /**
      * Scope constructor.

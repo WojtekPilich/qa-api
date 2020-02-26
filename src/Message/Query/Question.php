@@ -4,10 +4,7 @@ namespace App\Message\Query;
 
 final class Question
 {
-    /**
-     * @var int $id
-     */
-    private $id;
+    private int $id;
 
     /**
      * GetQuestion constructor.
