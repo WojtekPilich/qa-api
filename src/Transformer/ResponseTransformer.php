@@ -8,7 +8,7 @@ use App\Validator\ValidScope;
 
 final class ResponseTransformer implements QuestionsTransformable, QuestionTransformable
 {
-    /** @var array $data */
+    /** @var iterable | QuestionValueObject $data */
     private $data;
 
     /**
