@@ -26,7 +26,7 @@ final class ResponseTransformer implements QuestionsTransformable, QuestionTrans
      */
     public function transformQuestions(?ValidScope $scope): QuestionsValueObject
     {
-        $scopeArray = $scope ? $scope->getScope() : null;
+        $scopeParameters = $scope ? $scope->parameters() : null;
         $result = [
             'status' => 'OK',
         ];
@@ -43,10 +43,10 @@ final class ResponseTransformer implements QuestionsTransformable, QuestionTrans
         }
 
         foreach ($result['questions'] as $key => &$value) {
-            if (! $scope || ! in_array('author', $scopeArray)) {
+            if (! $scope || ! in_array('author', $scopeParameters)) {
                 unset($value['questioner']);
             }
-            if (! $scope || ! in_array('answers', $scopeArray)) {
+            if (! $scope || ! in_array('answers', $scopeParameters)) {
                 unset($value['answers']);
             }
         }

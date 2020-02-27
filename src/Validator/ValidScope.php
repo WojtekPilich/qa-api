@@ -4,22 +4,23 @@ namespace App\Validator;
 
 final class ValidScope
 {
-    private array $scope;
+    private array $parameters;
 
     /**
      * ValidScope constructor.
-     * @param array $scope
+     * @param array $parameters
+     *
      */
-    public function __construct(array $scope)
+    public function __construct(array $parameters)
     {
-        $this->scope = $scope;
+        $this->parameters = $parameters;
     }
 
     /**
      * @return array
      */
-    public function getScope(): array
+    public function parameters(): array
     {
-        return $this->scope;
+        return $this->parameters;
     }
 }
