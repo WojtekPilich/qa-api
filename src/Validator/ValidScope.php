@@ -4,10 +4,7 @@ namespace App\Validator;
 
 final class ValidScope
 {
-    /**
-     * @var array
-     */
-    private $scope;
+    private array $scope;
 
     /**
      * ValidScope constructor.

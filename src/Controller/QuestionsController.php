@@ -20,10 +20,7 @@ use WrongQueryParameter;
  */
 class QuestionsController extends AbstractFOSRestController
 {
-    /**
-     * @var QuestionsManager
-     */
-    private $manager;
+    private QuestionsManager $manager;
 
     /**
      * QuestionController constructor.
