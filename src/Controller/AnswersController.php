@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Exception\EmptyAnswer;
 use App\Exception\NoAnswer;
+use App\Manager\AnswerManager;
 use App\Mapper\JsonMapper;
+use App\Message\Command\Answer;
 use App\Validator\AnswerValidator;
 use App\Validator\NickValidator;
 use App\ValueObjects\AnswerValueObject;
@@ -12,7 +14,6 @@ use App\ValueObjects\NickValueObject;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\RequestParam;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,15 +23,19 @@ class AnswersController extends AbstractFOSRestController
 
     private NickValidator $nickValidator;
 
+    private AnswerManager $manager;
+
     /**
      * QuestionController constructor.
      * @param AnswerValidator $answerValidator
      * @param NickValidator $nickValidator
+     * @param AnswerManager $manager
      */
-    public function __construct(AnswerValidator $answerValidator, NickValidator $nickValidator)
+    public function __construct(AnswerValidator $answerValidator, NickValidator $nickValidator, AnswerManager $manager)
     {
         $this->answerValidator = $answerValidator;
         $this->nickValidator = $nickValidator;
+        $this->manager = $manager;
     }
 
     /**
@@ -50,12 +55,17 @@ class AnswersController extends AbstractFOSRestController
             $nick = new NickValueObject($request->get('nick'));
 
             $validAnswer = $this->answerValidator->validate($answer);
+            $validNick = null;
 
             if ($nick->isProvided()) {
                 $validNick = $this->nickValidator->validate($nick);
             }
 
-            return new JsonResponse('jest');
+            return $this->manager->save(new Answer(
+                $validAnswer->contents(),
+                $validNick ? $validNick->contents() : null,
+                $id
+            ));
 
         } catch (\Exception | EmptyAnswer | NoAnswer $exception) {
             return $mapper->handle($exception);
