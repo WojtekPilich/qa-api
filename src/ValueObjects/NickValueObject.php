@@ -4,13 +4,13 @@ namespace App\ValueObjects;
 
 final class NickValueObject
 {
-    private string $contents;
+    private ?string $contents;
 
     /**
      * NickValueObject constructor.
      * @param string $contents
      */
-    public function __construct(string $contents)
+    public function __construct(?string $contents)
     {
         $this->contents = $contents;
     }
@@ -21,5 +21,13 @@ final class NickValueObject
     public function contents(): string
     {
         return $this->contents();
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasContents(): bool
+    {
+        return $this->contents !== null;
     }
 }
