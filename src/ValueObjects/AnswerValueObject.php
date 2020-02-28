@@ -4,13 +4,13 @@ namespace App\ValueObjects;
 
 final class AnswerValueObject
 {
-    private string $contents;
+    private ?string $contents;
 
     /**
      * AnswerValueObject constructor.
      * @param string $contents
      */
-    public function __construct(string $contents)
+    public function __construct(?string $contents)
     {
         $this->contents = $contents;
     }
@@ -26,8 +26,16 @@ final class AnswerValueObject
     /**
      * @return bool
      */
-    public function hasContents(): bool
+    public function isNotProvided(): bool
     {
-        return $this->contents() !== "";
+        return $this->contents() === null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasEmptyContents(): bool
+    {
+        return $this->contents() === "";
     }
 }

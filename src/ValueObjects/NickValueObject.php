@@ -26,8 +26,16 @@ final class NickValueObject
     /**
      * @return bool
      */
-    public function hasContents(): bool
+    public function isProvided(): bool
     {
-        return $this->contents() !== "";
+        return $this->contents() !== null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasEmptyContents(): bool
+    {
+        return $this->contents() === "";
     }
 }
