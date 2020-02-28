@@ -16,11 +16,11 @@ final class NickValueObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function contents(): string
+    public function contents()
     {
-        return $this->contents();
+        return $this->contents;
     }
 
     /**
@@ -28,6 +28,6 @@ final class NickValueObject
      */
     public function hasContents(): bool
     {
-        return $this->contents !== null;
+        return $this->contents() !== "";
     }
 }

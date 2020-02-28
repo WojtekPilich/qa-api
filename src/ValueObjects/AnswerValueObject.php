@@ -4,23 +4,23 @@ namespace App\ValueObjects;
 
 final class AnswerValueObject
 {
-    private ?string $contents;
+    private string $contents;
 
     /**
      * AnswerValueObject constructor.
      * @param string $contents
      */
-    public function __construct(?string $contents)
+    public function __construct(string $contents)
     {
         $this->contents = $contents;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function contents(): string
+    public function contents()
     {
-        return $this->contents();
+        return $this->contents;
     }
 
     /**
@@ -28,6 +28,6 @@ final class AnswerValueObject
      */
     public function hasContents(): bool
     {
-        return $this->contents !== null;
+        return $this->contents() !== "";
     }
 }
