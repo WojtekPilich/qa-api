@@ -2,27 +2,34 @@
 
 namespace App\Controller;
 
-use App\Message\Command\AddAnswer;
+use App\Exception\EmptyAnswer;
+use App\Mapper\JsonMapper;
+use App\Validator\AnswerValidator;
+use App\Validator\NickValidator;
+use App\ValueObjects\AnswerValueObject;
+use App\ValueObjects\NickValueObject;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\RequestParam;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Messenger\Stamp\HandledStamp;
 
 class AnswersController extends AbstractFOSRestController
 {
-    /** @var MessageBusInterface $messageBus */
-    private $messageBus;
+    private AnswerValidator $answerValidator;
+
+    private NickValidator $nickValidator;
 
     /**
      * QuestionController constructor.
-     * @param MessageBusInterface $messageBus
+     * @param AnswerValidator $answerValidator
+     * @param NickValidator $nickValidator
      */
-    public function __construct(MessageBusInterface $messageBus)
+    public function __construct(AnswerValidator $answerValidator, NickValidator $nickValidator)
     {
-        $this->messageBus = $messageBus;
+        $this->answerValidator = $answerValidator;
+        $this->nickValidator = $nickValidator;
     }
 
     /**
@@ -32,13 +39,24 @@ class AnswersController extends AbstractFOSRestController
      * @RequestParam(name="nick", nullable=true, description="Answerer nick")
      * @param Request $request
      * @param int $id
+     * @param JsonMapper $mapper
      * @return Response
      */
-    public function postAnswerAction(Request $request, int $id): Response
+    public function postAnswerAction(Request $request, int $id, JsonMapper $mapper): Response
     {
-        $envelope = $this->messageBus->dispatch(new AddAnswer($request, $id));
-        $handledStamp = $envelope->last(HandledStamp::class);
+        try {
+            $answer = new AnswerValueObject($request->get('answer'));
+            $nick = new NickValueObject($request->get('nick'));
 
-        return $handledStamp->getResult();
+            if ($answer->hasContents() || $nick->hasContents()) {
+                $validAnswer = $this->answerValidator->validate($answer);
+//                $validNick = $this->nickValidator->validate($nick);
+            }
+
+            return new JsonResponse('jest');
+
+        } catch (\Exception | EmptyAnswer $exception) {
+            return $mapper->handle($exception);
+        }
     }
 }
