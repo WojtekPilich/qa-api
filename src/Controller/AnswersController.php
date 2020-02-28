@@ -1,8 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller;
 
 use App\Exception\EmptyAnswer;
+use App\Exception\NoAnswer;
 use App\Mapper\JsonMapper;
 use App\Validator\AnswerValidator;
 use App\Validator\NickValidator;
@@ -48,14 +49,15 @@ class AnswersController extends AbstractFOSRestController
             $answer = new AnswerValueObject($request->get('answer'));
             $nick = new NickValueObject($request->get('nick'));
 
-            if ($answer->hasContents() || $nick->hasContents()) {
-                $validAnswer = $this->answerValidator->validate($answer);
-//                $validNick = $this->nickValidator->validate($nick);
+            $validAnswer = $this->answerValidator->validate($answer);
+
+            if ($nick->isProvided()) {
+                $validNick = $this->nickValidator->validate($nick);
             }
 
             return new JsonResponse('jest');
 
-        } catch (\Exception | EmptyAnswer $exception) {
+        } catch (\Exception | EmptyAnswer | NoAnswer $exception) {
             return $mapper->handle($exception);
         }
     }
