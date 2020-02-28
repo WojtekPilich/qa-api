@@ -43,7 +43,7 @@ class AnswersController extends AbstractFOSRestController
      * @param JsonMapper $mapper
      * @return Response
      */
-    public function postAnswerAction(Request $request, int $id, JsonMapper $mapper): Response
+    public function postAnswerAction(Request $request, JsonMapper $mapper, int $id): Response
     {
         try {
             $answer = new AnswerValueObject($request->get('answer'));
