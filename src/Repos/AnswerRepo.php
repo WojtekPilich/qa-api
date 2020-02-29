@@ -24,6 +24,9 @@ final class AnswerRepo implements AnswerAddable
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * @param \App\Message\Command\Answer $answer
+     */
     public function addAnswer(\App\Message\Command\Answer $answer)
     {
         $question = $this->questionRepository->findOneBy([
