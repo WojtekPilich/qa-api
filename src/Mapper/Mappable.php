@@ -3,8 +3,9 @@
 namespace App\Mapper;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 interface Mappable
 {
-    public function map($data): JsonResponse;
+    public function map($data, int $responseCode = Response::HTTP_OK): JsonResponse;
 }

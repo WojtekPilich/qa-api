@@ -5,8 +5,8 @@ namespace App\MessageHandler\Command;
 use App\Mapper\JsonMapper;
 use App\Message\Command\Answer;
 use App\Repos\AnswerRepo;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 final class AnswerHandler implements MessageHandlerInterface
@@ -18,10 +18,9 @@ final class AnswerHandler implements MessageHandlerInterface
     /**
      * AddAnswerHandler constructor.
      * @param AnswerRepo $repo
-     * @param EntityManagerInterface $entityManager
      * @param JsonMapper $mapper
      */
-    public function __construct(AnswerRepo $repo, EntityManagerInterface $entityManager, JsonMapper $mapper)
+    public function __construct(AnswerRepo $repo, JsonMapper $mapper)
     {
         $this->repo = $repo;
         $this->mapper = $mapper;
@@ -38,6 +37,6 @@ final class AnswerHandler implements MessageHandlerInterface
         return $this->mapper->map([
             'status' => 'created',
             'details' => "successfully added new answer, question details available here: http://127.0.0.1:8000/questions/{$answer->questionId()}"
-        ]);
+        ], Response::HTTP_CREATED);
     }
 }

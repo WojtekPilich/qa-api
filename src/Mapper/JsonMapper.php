@@ -11,11 +11,12 @@ final class JsonMapper implements MapOrThrow
 {
     /**
      * @param QuestionsValueObject | iterable $data
+     * @param int $responseCode
      * @return JsonResponse
      */
-    public function map($data): JsonResponse
+    public function map($data, int $responseCode = Response::HTTP_OK): JsonResponse
     {
-        return new JsonResponse(is_object($data) ? $data->questions() : $data, Response::HTTP_OK);
+        return new JsonResponse(is_object($data) ? $data->questions() : $data, $responseCode);
     }
 
     /**
